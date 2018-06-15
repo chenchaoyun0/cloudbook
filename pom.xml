@@ -9,5 +9,6 @@
   <modules>
     <module>eurekaserver</module>
     <module>book-log</module>
+    <module>book-common</module>
   </modules>
 </project>
