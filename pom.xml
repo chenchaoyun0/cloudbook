@@ -8,5 +8,6 @@
   
   <modules>
     <module>eurekaserver</module>
+    <module>book-log</module>
   </modules>
 </project>
