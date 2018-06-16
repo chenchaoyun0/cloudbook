@@ -4,15 +4,15 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>book-service-log</artifactId>
+    <artifactId>book-service-book</artifactId>
     <packaging>jar</packaging>
 
-    <name>book-service-log</name>
+    <name>book-service-book</name>
     <parent>
         <groupId>com.cyc</groupId>
         <artifactId>book-service-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <!-- lookup parent from repository -->
+         <!-- lookup parent from repository -->
         <relativePath />
     </parent>
 
@@ -28,6 +28,16 @@
             <groupId>com.cyc</groupId>
             <artifactId>book-service-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>log4j-over-slf4j</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
@@ -52,7 +62,8 @@
         </plugins>
     </build>
 
-    <distributionManagement>
+
+<distributionManagement>
         <repository>
             <id>nexus-releases</id>
             <name>deployment</name>
@@ -64,5 +75,4 @@
             <url>http://58.87.121.73:8080/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
-
 </project>
