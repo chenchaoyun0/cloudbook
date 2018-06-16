@@ -10,5 +10,6 @@
     <module>eurekaserver</module>
     <module>book-log</module>
     <module>book-common</module>
+    <module>bookweb</module>
   </modules>
 </project>

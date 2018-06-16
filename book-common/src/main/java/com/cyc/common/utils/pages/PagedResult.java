@@ -4,9 +4,6 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.util.List;
 
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Sort;
-
 import lombok.Data;
 @Data
 public class PagedResult<T> extends BaseEntity {
