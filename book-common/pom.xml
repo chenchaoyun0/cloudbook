@@ -62,11 +62,8 @@
             <artifactId>commons-dbutils</artifactId>
             <version>1.5</version>
         </dependency>
-        <!-- <dependency>
-            <groupId>com.mchange</groupId>
-            <artifactId>c3p0</artifactId>
-            <version>0.9.5-pre2</version>
-        </dependency> -->
+        <!-- <dependency> <groupId>com.mchange</groupId> <artifactId>c3p0</artifactId> 
+            <version>0.9.5-pre2</version> </dependency> -->
         <!-- 添加json的依赖包 -->
         <dependency>
             <groupId>net.sf.json-lib</groupId>
@@ -229,6 +226,16 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper-spring-boot-starter</artifactId>
+            <version>${mapper.starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-commons</artifactId>
+            <version>1.13.1.RELEASE</version>
         </dependency>
         <!-- <dependency> <groupId>com.sun</groupId> <artifactId>yanfs</artifactId> 
             <version>${sun.yanfs.version}</version> </dependency> -->
