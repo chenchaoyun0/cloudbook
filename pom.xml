@@ -14,6 +14,7 @@
     <module>book-service-parent</module>
     <module>book-service-log</module>
     <module>book-service-book</module>
+    <module>book-service-user</module>
     <module>bookweb</module>
   </modules>
 </project>
