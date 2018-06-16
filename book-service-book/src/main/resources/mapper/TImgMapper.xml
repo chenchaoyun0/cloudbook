@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cyc.mapper.TImgMapper">
+    <!-- 缓存 -->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache" />
+    <resultMap
+        id="BaseResultMap"
+        type="com.cyc.common.po.TImg">
+        <id
+            column="img_Id"
+            property="imgId"
+            jdbcType="VARCHAR" />
+        <result
+            column="link_Id"
+            property="linkId"
+            jdbcType="VARCHAR" />
+        <result
+            column="link_Type"
+            property="linkType"
+            jdbcType="VARCHAR" />
+        <result
+            column="img_Path"
+            property="imgPath"
+            jdbcType="VARCHAR" />
+        <result
+            column="create_User"
+            property="createUser"
+            jdbcType="VARCHAR" />
+        <result
+            column="create_Time"
+            property="createTime"
+            jdbcType="TIMESTAMP" />
+        <result
+            column="last_Modify_User"
+            property="lastModifyUser"
+            jdbcType="VARCHAR" />
+        <result
+            column="last_Modify_Time"
+            property="lastModifyTime"
+            jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        img_Id, link_Id, link_Type, img_Path, create_User,
+        create_Time,
+        last_Modify_User,
+        last_Modify_Time
+    </sql>
+</mapper>
