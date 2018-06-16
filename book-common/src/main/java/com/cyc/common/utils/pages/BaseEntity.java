@@ -2,7 +2,6 @@ package com.cyc.common.utils.pages;
 
 import com.cyc.common.utils.exception.UserException;
 
-import java.awt.print.Pageable;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -10,6 +9,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.data.domain.Pageable;
 
 /**
  * <b>类说明：</b>bean基类
