@@ -33,7 +33,6 @@ public class BookWebApplication extends SpringBootServletInitializer implements 
     log.info(">>>>>图书管理系统启动成功!");
   }
 
-  @Override
   public void customize(ConfigurableEmbeddedServletContainer container) {
     if (contextPath != null) {
       container.setContextPath(contextPath);
