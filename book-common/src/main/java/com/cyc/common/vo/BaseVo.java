@@ -1,10 +1,10 @@
  package com.cyc.common.vo;
 
-import java.io.Serializable;
+import com.cyc.common.base.BookResponse;
 
 import lombok.Data;
 @Data
-public class BaseVo implements Serializable{
+public class BaseVo extends BookResponse{
 
   /**
    *
