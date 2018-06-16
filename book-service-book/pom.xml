@@ -5,14 +5,15 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>book-service-log</artifactId>
+    <artifactId>book-service-book</artifactId>
     <packaging>jar</packaging>
 
-    <name>book-service-log</name>
+    <name>book-service-book</name>
     <parent>
         <groupId>com.cyc</groupId>
         <artifactId>book-service-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath /> <!-- lookup parent from repository -->
     </parent>
 
     <properties>
@@ -27,6 +28,16 @@
             <groupId>com.cyc</groupId>
             <artifactId>book-service-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>log4j-over-slf4j</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
