@@ -8,7 +8,7 @@
   
   
   <modules>
-    <module>eurekaserver</module>
+    <module>book-eurekaserver</module>
     <module>book-common</module>
     <module>book-service-common</module>
     <module>book-service-parent</module>
