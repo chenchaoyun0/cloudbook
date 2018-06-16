@@ -5,10 +5,10 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>book-log</artifactId>
+    <artifactId>book-service-log</artifactId>
     <packaging>jar</packaging>
 
-    <name>book-log</name>
+    <name>book-service-log</name>
     <parent>
         <groupId>com.cyc</groupId>
         <artifactId>book-service-parent</artifactId>

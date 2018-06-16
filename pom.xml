@@ -9,7 +9,7 @@
   
   <modules>
     <module>eurekaserver</module>
-    <module>book-log</module>
+    <module>book-service-log</module>
     <module>book-common</module>
     <module>bookweb</module>
     <module>book-service-parent</module>
