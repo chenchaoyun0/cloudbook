@@ -115,4 +115,14 @@ public class LogServiceImpl implements ILogService {
     }
   }
 
+  @Override
+  public TLog selectByUserIp(String userIp) {
+    try {
+      return tLogMapper.selectByUserIp(userIp);
+    } catch (UserException e) {
+      log.error("异常,{}", e);
+      throw new UserException("操作失败");
+    }
+  }
+
 }

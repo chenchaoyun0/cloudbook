@@ -17,6 +17,7 @@ public class DateConvertUtils {
   public static final String DATE_FORMAT = "yyyy-MM-dd";
   public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
   public static final String DATE_TIME_NO_SS = "yyyy-MM-dd HH:mm";
+  public static final String DATE_TIME_SSSS = "yyyy-MM-dd HH:mm:ss:SSS";
   public static final String DATE_TIME_SSSS_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
   public static final String DATE_TIME_UTC_SSSZ_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS Z"; // 转换yyyy-MM-ddTHH:mm:ss.SSS UTC
   public static final  long nd = 1000 * 24 * 60 * 60;

@@ -31,6 +31,8 @@ import com.cyc.common.po.User;
 import com.cyc.common.utils.exception.UserException;
 import com.cyc.common.utils.file.BookFileUtils;
 import com.cyc.common.utils.pages.PagedResult;
+import com.cyc.common.vo.SelectBookDetailReq;
+import com.cyc.common.vo.SelectBookDetailResp;
 import com.cyc.common.vo.SelectBookPagesReq;
 import com.cyc.common.vo.SelectBookPagesResp;
 import com.cyc.common.vo.UploadBookSubmitReq;
@@ -56,13 +58,18 @@ public class BookController {
   private String port;
 
   @RequestMapping("/info")
-  public String home() {
-    return "测试 book-book" + ",port:" + port;
+  public String info() {
+    PagedResult<Book> pages = bookService.selectBookPages(new Book(), 1, 10);
+    String jsonString = JSONObject.toJSONString(pages);
+    return "测试 book-book" + ",port:" + port+";测试响应:"+jsonString;
   }
 
   @RequestMapping(value = "/uploadBookSubmit", method = RequestMethod.POST)
   public UploadBookSubmitResp uploadBookSubmit(@RequestParam("req") UploadBookSubmitReq req,
     @RequestParam("bookFile") MultipartFile[] bookFile) {
+    
+    log.info(">>>>>>>>>uploadBookSubmit 请求:{}", JSONObject.toJSONString(req));
+    
     UploadBookSubmitResp resp = new UploadBookSubmitResp();
     Book book = req.getBook();
     User user = req.getUser();
@@ -163,13 +170,14 @@ public class BookController {
     resp.setImgList(imageBase64StrList);
     resp.setBook(book);
     resp.setSuccessMsg("上传成功");
+    log.info(">>>>>>>>>uploadBookSubmit 响应:{}", JSONObject.toJSONString(resp));
     return resp;
   }
 
-  @RequestMapping(value = "selectBookPages", method = {RequestMethod.POST})
+  @RequestMapping(value = "/selectBookPages", method = {RequestMethod.POST})
   public SelectBookPagesResp selectBookPages(@RequestBody SelectBookPagesReq req) {
 
-    log.info(">>>>>>>>>selectBookPages req:{}", JSONObject.toJSONString(req));
+    log.info(">>>>>>>>>selectBookPages 请求:{}", JSONObject.toJSONString(req));
 
     String loginName = req.getLoginName();
     Book book = req.getBook();
@@ -193,23 +201,31 @@ public class BookController {
       resp.setErrorMsg(e.getMessage());
     }
     //
-    log.info(">>>>>>>>>selectBookPages resp:{}", JSONObject.toJSONString(resp));
+    log.info(">>>>>>>>>selectBookPages 响应:{}", JSONObject.toJSONString(resp));
     return resp;
   }
 
-  @RequestMapping(value = "selectBookDetail/{bookId}", method = {RequestMethod.GET})
-  public String selectBookDetail(@PathVariable("bookId") String bookId, Model model) {
-    Book book = bookService.selectByPrimaryKey(bookId);
-
-    model.addAttribute("book", book);
-    TImg tImg = new TImg();
-    tImg.setLinkId(bookId);
-    log.info("查询图书图片begin...");
-    List<TImg> imgList = imgService.selectList(tImg);
-    log.info("查询图书图片end...imgList:{}", JSONObject.toJSON(imgList));
-    List<String> imageBase64StrList = BookFileUtils.getImageBase64StrList(imgList);
-    model.addAttribute("imgList", imageBase64StrList);
-    return "book/bookDetail";
+  @RequestMapping(value = "/selectBookDetail", method = {RequestMethod.POST})
+  public SelectBookDetailResp selectBookDetail(@RequestBody SelectBookDetailReq req) {
+    log.info(">>>>>>>>>selectBookDetail 请求:{}", JSONObject.toJSONString(req));
+    SelectBookDetailResp resp = new SelectBookDetailResp();
+    String bookId = req.getBookId();
+    try {
+      Book book = bookService.selectByPrimaryKey(bookId);
+      TImg tImg = new TImg();
+      tImg.setLinkId(bookId);
+      log.info("查询图书图片begin...");
+      List<TImg> imgList = imgService.selectList(tImg);
+      log.info("查询图书图片end...imgList:{}", JSONObject.toJSON(imgList));
+      List<String> imageBase64StrList = BookFileUtils.getImageBase64StrList(imgList);
+      resp.setBook(book);
+      resp.setImgList(imageBase64StrList);
+    } catch (Exception e) {
+      resp.setErrorCode();
+      resp.setErrorMsg(e.getMessage());
+    }
+    log.info(">>>>>>>>>selectBookDetail 响应:{}", JSONObject.toJSONString(resp));
+    return  resp;
   }
 
   @RequestMapping(value = "updateBookInput/{bookId}", method = {RequestMethod.GET})

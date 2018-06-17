@@ -317,7 +317,7 @@
 		</if>
 		and book_Flag=1
 		<include refid="selectBookListWhere"></include>
-		<if test="book.user.loginName!=null and book.user.loginName!=''">
+		<if test="book.user!=null and book.user.loginName!=null and book.user.loginName!=''">
 		and u.login_Name like '%${book.user.loginName}%'
 		</if>
 		ORDER BY book_Upload_Time DESC

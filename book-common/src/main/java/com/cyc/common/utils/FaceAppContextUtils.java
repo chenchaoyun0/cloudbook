@@ -1,10 +1,11 @@
-package com.cyc.context;
+package com.cyc.common.utils;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
 /**
  * 
  * @author chenchaoyun
@@ -23,6 +24,14 @@ public class FaceAppContextUtils {
       return null;
 
     return sra.getRequest();
+  }
+
+  public static String getCurrentRequestIp() {
+    HttpServletRequest request = getCurrentRequest();
+    if (request == null)
+      return null;
+    String remoteAddr = request.getRemoteAddr();
+    return remoteAddr;
   }
 
 }

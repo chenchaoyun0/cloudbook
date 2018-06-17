@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +25,8 @@ import com.cyc.common.po.Book;
 import com.cyc.common.po.User;
 import com.cyc.common.utils.UUID2NO;
 import com.cyc.common.utils.pages.PagedResult;
+import com.cyc.common.vo.SelectBookDetailReq;
+import com.cyc.common.vo.SelectBookDetailResp;
 import com.cyc.common.vo.SelectBookPagesReq;
 import com.cyc.common.vo.SelectBookPagesResp;
 import com.cyc.common.vo.UploadBookSubmitReq;
@@ -44,7 +47,7 @@ public class BookController {
   private String port;
 
   @RequestMapping("/info")
-  public String home() {
+  public String info() {
     return "测试 book-book" + ",port:" + port;
   }
 
@@ -119,5 +122,17 @@ public class BookController {
     model.addAttribute("pages", pages);
 
     return "indexHome";
+  }
+
+  @RequestMapping(value = "selectBookDetail/{bookId}", method = {RequestMethod.GET})
+  public String selectBookDetail(@PathVariable("bookId") String bookId, Model model) {
+    SelectBookDetailReq req = new SelectBookDetailReq();
+    req.setBookId(bookId);
+    SelectBookDetailResp resp = bookBookClient.selectBookDetail(req);
+    Book book = resp.getBook();
+    List<String> imgList = resp.getImgList();
+    model.addAttribute("book", book);
+    model.addAttribute("imgList", imgList);
+    return "book/bookDetail";
   }
 }

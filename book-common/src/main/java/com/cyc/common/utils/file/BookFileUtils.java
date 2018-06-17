@@ -1,13 +1,10 @@
 package com.cyc.common.utils.file;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
@@ -28,7 +25,6 @@ public class BookFileUtils {
   private static String nfsUrl = null;
   private static String[] imgTypes = null;
   static {
-    nfsUrl = PropertiesUtil.getFilePath("properties/nfs.properties", "nfsUrl");
     imgTypes = new String[] {"jpg", "png", "jpeg", "gif", "bmp", "jpe", "tif", "tiff"};
   }
 
