@@ -87,9 +87,7 @@ public class BookServiceControllerAop {
       log.info("请求URL : {}", request.getRequestURL().toString());
       log.info("请求方式HTTP_METHOD : {}", request.getMethod());
       String remoteAddr = request.getRemoteAddr();
-      String userIp = FaceAppContextUtils.getCurrentRequestIp();
       log.info("请求IP : {}", remoteAddr);
-      log.info("请求IPuserIp : {}", userIp);
       String action = joinPoint.getSignature().getName();
       String module = joinPoint.getTarget().getClass().getSimpleName();
       log.info("请求CLASS_METHOD : {}",

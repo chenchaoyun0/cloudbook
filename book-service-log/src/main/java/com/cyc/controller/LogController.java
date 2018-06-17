@@ -99,6 +99,7 @@ public class LogController {
   @RequestMapping(value = "/saveLog", method = RequestMethod.POST)
   public int saveLog(@RequestBody TLog tLog) {
     String userIp = FaceAppContextUtils.getCurrentRequestIp();
+    tLog.setUserIp(userIp);
     int insert = 0;
     try {
       //
@@ -122,7 +123,7 @@ public class LogController {
           userAddress = area + "," + province + "," + city + "," + country + "," + isp;
         }
         String ipxy = Arrays.toString(IPAddressMap.getIPXY(userIp));
-        String userJWD = ipxy==null?"未知":ipxy;
+        String userJWD = ipxy==null||ipxy.equals("null")?"未知":ipxy;
         // new
         tLog.setUserJwd(userJWD);
         tLog.setUserAddress(userAddress);
