@@ -15,6 +15,6 @@
     <module>book-service-log</module>
     <module>book-service-book</module>
     <module>book-service-user</module>
-    <module>bookweb</module>
+    <module>bookmanager</module>
   </modules>
 </project>
