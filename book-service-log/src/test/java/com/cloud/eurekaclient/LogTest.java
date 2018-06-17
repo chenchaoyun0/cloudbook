@@ -16,7 +16,7 @@ import com.cyc.BookLogApplication;
 import com.cyc.common.po.Student;
 import com.cyc.common.po.TLog;
 import com.cyc.common.utils.pages.PagedResult;
-import com.cyc.common.vo.TodayCountVo;
+import com.cyc.common.vo.TodayCountResp;
 import com.cyc.mapper.StudentMapper;
 import com.cyc.service.ILogService;
 
@@ -87,7 +87,7 @@ public class LogTest {
 
   @Test
   public void testTodayCount() {
-    TodayCountVo todayCount = logService.todayCount();
+    TodayCountResp todayCount = logService.todayCount();
     logger.info("+++++:{}", JSONObject.toJSON(todayCount));
   }
 

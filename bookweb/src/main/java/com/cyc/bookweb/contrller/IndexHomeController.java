@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.cyc.bookweb.feignclient.IBookLogService;
+import com.cyc.bookweb.feignclient.IBookLogClient;
 import com.cyc.common.po.TLog;
 import com.cyc.common.utils.pages.PagedResult;
-import com.cyc.common.vo.IndexHomeForIpVo;
-import com.cyc.common.vo.IndexHomeVo;
-import com.cyc.common.vo.TodayCountVo;
+import com.cyc.common.vo.IndexHomeForIpResp;
+import com.cyc.common.vo.IndexHomeResp;
+import com.cyc.common.vo.TodayCountResp;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,14 +24,14 @@ import lombok.extern.slf4j.Slf4j;
 public class IndexHomeController {
 
   @Autowired
-  private IBookLogService bookLogService;
+  private IBookLogClient bookLogService;
 
   @RequestMapping(value = "/indexHome", method = RequestMethod.GET)
   public String indexHome(Model model, HttpServletRequest request, ModelAndView modelAndView, Integer pageNo,
     Integer pageSize) {
-    IndexHomeVo indexHomeVo = bookLogService.indexHome(pageNo, pageSize);
+    IndexHomeResp indexHomeVo = bookLogService.indexHome(pageNo, pageSize);
     PagedResult<TLog> pages = indexHomeVo.getPages();
-    TodayCountVo todayCount = indexHomeVo.getTodayCount();
+    TodayCountResp todayCount = indexHomeVo.getTodayCount();
     Long totalcount = indexHomeVo.getTotalcount();
     //
     String url = request.getRequestURI();
@@ -56,7 +56,7 @@ public class IndexHomeController {
   @RequestMapping(value = "/indexHomeForIp", method = RequestMethod.GET)
   public String indexHomeForIp(String userIp, Model model, HttpServletRequest request, ModelAndView modelAndView,
     Integer pageNo, Integer pageSize) {
-    IndexHomeForIpVo indexHomeForIpVo = bookLogService.indexHomeForIp(userIp, pageNo, pageSize);
+    IndexHomeForIpResp indexHomeForIpVo = bookLogService.indexHomeForIp(userIp, pageNo, pageSize);
 
     PagedResult<TLog> pages = indexHomeForIpVo.getPages();
     Long totalcount = indexHomeForIpVo.getTotalcount();

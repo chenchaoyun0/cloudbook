@@ -5,7 +5,7 @@ import com.cyc.common.utils.pages.PagedResult;
 
 import lombok.Data;
 @Data
-public class IndexHomeVo extends BaseVo {
+public class IndexHomeResp extends BaseResp {
 
   /**
    *
@@ -14,6 +14,6 @@ public class IndexHomeVo extends BaseVo {
 
   private PagedResult<TLog> pages;
   private Long totalcount;
-  private TodayCountVo todayCount;
+  private TodayCountResp todayCount;
 
 }

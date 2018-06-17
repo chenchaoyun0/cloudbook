@@ -285,7 +285,7 @@
         select SUM(count) from t_log
     </select>
     <!-- todayCount -->
-    <select id="todayCount" resultType="com.cyc.common.vo.TodayCountVo">
+    <select id="todayCount" resultType="com.cyc.common.vo.TodayCountResp">
         SELECT
           count(*) as todayVisitorCount,
           SUM(sc) as todayCount

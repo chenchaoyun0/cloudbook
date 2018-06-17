@@ -14,7 +14,7 @@ import com.cyc.common.utils.exception.UserException;
 import com.cyc.common.utils.pages.BeanUtil;
 import com.cyc.common.utils.pages.PagedResult;
 import com.cyc.common.utils.time.DateConvertUtils;
-import com.cyc.common.vo.TodayCountVo;
+import com.cyc.common.vo.TodayCountResp;
 import com.cyc.mapper.TLogMapper;
 import com.cyc.service.ILogService;
 import com.github.pagehelper.PageHelper;
@@ -92,11 +92,11 @@ public class LogServiceImpl implements ILogService {
   }
 
   @Override
-  public TodayCountVo todayCount() {
+  public TodayCountResp todayCount() {
     try {
       String todayBegin = DateConvertUtils.format(new Date()) + " 00:00:00";
       String todayEnd = DateConvertUtils.format(new Date()) + " 23:59:59";
-      TodayCountVo todayCount = tLogMapper.todayCount(todayBegin, todayEnd);
+      TodayCountResp todayCount = tLogMapper.todayCount(todayBegin, todayEnd);
       log.info("查询当日访问统计结果,todayCount:{}", JSONObject.toJSONString(todayCount));
       return todayCount;
     } catch (Exception e) {

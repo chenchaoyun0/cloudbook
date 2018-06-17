@@ -6,7 +6,7 @@ import com.cyc.common.utils.pages.PagedResult;
 import lombok.Data;
 
 @Data
-public class IndexHomeForIpVo extends BaseVo {
+public class IndexHomeForIpResp extends BaseResp {
   /**
   *
   */

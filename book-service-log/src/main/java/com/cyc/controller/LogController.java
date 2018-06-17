@@ -16,9 +16,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.cyc.common.base.BookResponse;
 import com.cyc.common.po.TLog;
 import com.cyc.common.utils.pages.PagedResult;
-import com.cyc.common.vo.IndexHomeForIpVo;
-import com.cyc.common.vo.IndexHomeVo;
-import com.cyc.common.vo.TodayCountVo;
+import com.cyc.common.vo.IndexHomeForIpResp;
+import com.cyc.common.vo.IndexHomeResp;
+import com.cyc.common.vo.TodayCountResp;
 import com.cyc.service.ILogService;
 
 @RestController
@@ -37,13 +37,13 @@ public class LogController {
   }
 
   @RequestMapping(value = "/indexHome", method = RequestMethod.GET)
-  public IndexHomeVo indexHome(Integer pageNo, Integer pageSize) {
-    IndexHomeVo indexHomeVo = new IndexHomeVo();
+  public IndexHomeResp indexHome(Integer pageNo, Integer pageSize) {
+    IndexHomeResp indexHomeVo = new IndexHomeResp();
     try {
       TLog tLog = new TLog();
       PagedResult<TLog> pages = logService.selectLogPages(tLog, pageNo, pageSize);
       Long totalcount = logService.selectLogSumCount();
-      TodayCountVo todayCount = logService.todayCount();
+      TodayCountResp todayCount = logService.todayCount();
       indexHomeVo.setPages(pages);
       indexHomeVo.setTodayCount(todayCount);
       indexHomeVo.setTotalcount(totalcount);
@@ -67,8 +67,8 @@ public class LogController {
   }
 
   @RequestMapping(value = "/indexHomeForIp", method = RequestMethod.GET)
-  public IndexHomeForIpVo indexHomeForIp(String userIp, Integer pageNo, Integer pageSize) {
-    IndexHomeForIpVo resp = new IndexHomeForIpVo();
+  public IndexHomeForIpResp indexHomeForIp(String userIp, Integer pageNo, Integer pageSize) {
+    IndexHomeForIpResp resp = new IndexHomeForIpResp();
     try {
       PagedResult<TLog> pages = logService.selectLogPagesForIp(userIp, pageNo, pageSize);
       Long totalcount = logService.selectLogSumCount();

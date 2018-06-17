@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.cyc.common.po.TLog;
 import com.cyc.common.po.TLogKey;
-import com.cyc.common.vo.TodayCountVo;
+import com.cyc.common.vo.TodayCountResp;
 public interface TLogMapper {
     int deleteByPrimaryKey(TLogKey key);
 
@@ -28,5 +28,5 @@ public interface TLogMapper {
 
     List<TLog> selectLogPagesForIp(@Param("userIp") String userIp);
     
-    TodayCountVo todayCount(@Param("todayBegin") String todayBegin,@Param("todayEnd") String todayEnd);
+    TodayCountResp todayCount(@Param("todayBegin") String todayBegin,@Param("todayEnd") String todayEnd);
 }
