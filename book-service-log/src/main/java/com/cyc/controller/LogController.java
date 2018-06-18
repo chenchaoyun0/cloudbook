@@ -18,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSONObject;
 import com.cyc.common.base.BookResponse;
 import com.cyc.common.po.TLog;
-import com.cyc.common.utils.FaceAppContextUtils;
 import com.cyc.common.utils.apaddress.AddressUtils;
 import com.cyc.common.utils.apaddress.IPAddressData;
 import com.cyc.common.utils.apaddress.IPAddressMap;
@@ -98,7 +97,7 @@ public class LogController {
 
   @RequestMapping(value = "/saveLog", method = RequestMethod.POST)
   public int saveLog(@RequestBody TLog tLog) {
-    String userIp = FaceAppContextUtils.getCurrentRequestIp();
+    String userIp = tLog.getUserIp();
     tLog.setUserIp(userIp);
     int insert = 0;
     try {
