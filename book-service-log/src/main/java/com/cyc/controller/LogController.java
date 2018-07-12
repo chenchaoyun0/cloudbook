@@ -1,9 +1,12 @@
 package com.cyc.controller;
 
 import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +15,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.cyc.common.base.BookResponse;
+import com.cyc.common.base.ErrorCode;
+import com.cyc.common.po.BlackLisEntity;
 import com.cyc.common.po.TLog;
+import com.cyc.common.po.VisitorProfile;
+import com.cyc.common.utils.LogUtil;
 import com.cyc.common.utils.apaddress.AddressUtils;
 import com.cyc.common.utils.apaddress.IPAddressData;
 import com.cyc.common.utils.apaddress.IPAddressMap;
@@ -26,9 +33,11 @@ import com.cyc.common.utils.pages.PagedResult;
 import com.cyc.common.vo.IndexHomeForIpResp;
 import com.cyc.common.vo.IndexHomeResp;
 import com.cyc.common.vo.TodayCountResp;
+import com.cyc.mapper.BlackListMapper;
 import com.cyc.service.ILogService;
+import com.cyc.service.IVisitorProfileService;
 
-import cn.itcast.commons.CommonUtils;
+import tk.mybatis.mapper.entity.Example;
 
 @RestController
 public class LogController {
@@ -40,11 +49,88 @@ public class LogController {
   @Value("${server.port}")
   private String port;
 
+  @Autowired
+  private IVisitorProfileService visitorProfileService;
+
+  @Autowired
+  private BlackListMapper blackListMapper;
+
+  @RequestMapping(value = "/selectBlackLisEntityByIp", method = RequestMethod.GET)
+  public BlackLisEntity selectBlackLisEntityByIp(@RequestParam(value = "ip") String ip) {
+    BlackLisEntity blackLisEntity=null;
+    try {
+      Example example = new Example(BlackLisEntity.class);
+      example.createCriteria().andEqualTo("ip", ip);
+      blackLisEntity = blackListMapper.selectOneByExample(example);
+      return blackLisEntity;
+    } catch (Exception e) {
+      log.error("异常:{}", e);
+    }
+    return blackLisEntity;
+  }
+
+  @RequestMapping(value = "/updateBlackLisEntitySelective", method = RequestMethod.POST)
+  public int updateBlackLisEntitySelective(BlackLisEntity blackLisEntity) {
+    try {
+      Example exampleUpdate = new Example(BlackLisEntity.class);
+      exampleUpdate.createCriteria().andEqualTo("id", blackLisEntity.getId());
+      int updateByPrimaryKey = blackListMapper.updateByExampleSelective(blackLisEntity, exampleUpdate);
+      return updateByPrimaryKey;
+    } catch (Exception e) {
+      log.error("异常:{}", e);
+    }
+    return 0;
+  }
+
+  @RequestMapping(value = "/saveBlackLisEntity", method = RequestMethod.POST)
+  public int saveBlackLisEntity(BlackLisEntity blackLisEntity) {
+    try {
+      return blackListMapper.insert(blackLisEntity);
+    } catch (Exception e) {
+      log.error("异常:{}", e);
+    }
+    return 0;
+  }
+
+  @RequestMapping(value = "/saveVisitorProfile", method = RequestMethod.POST)
+  public int saveVisitorProfile(@RequestBody VisitorProfile visitorProfile) {
+    try {
+      return visitorProfileService.insert(visitorProfile);
+    } catch (Exception e) {
+      log.error("异常:{}", e);
+    }
+    return 0;
+  }
+
+  @RequestMapping(value = "/visitors", method = RequestMethod.GET)
+  public String visitors(HttpServletResponse response) {
+    try {
+      List<VisitorProfile> visitors = visitorProfileService.visitors();
+      String jsonString = JSONObject.toJSONString(visitors);
+      String formatAsJSON = LogUtil.formatAsJSON(jsonString);
+      return formatAsJSON;
+    } catch (Exception e) {
+      log.error("异常:{}", e);
+    }
+    return ErrorCode.ERROR_CODE + "";
+
+  }
+
+  @RequestMapping(value = "/totalPathCount", method = RequestMethod.GET)
+  public long totalPathCount(@RequestParam(value = "path") String path) {
+    try {
+      return logService.totalPathCount(path);
+    } catch (Exception e) {
+      log.error("异常:{}", e);
+    }
+    return 0;
+  }
+
   @RequestMapping("/info")
   public String home() {
     PagedResult<TLog> pages = logService.selectLogPages(new TLog(), null, null);
     String jsonString = JSONObject.toJSONString(pages);
-    return "测试 book-log" + ",port:" + port+";测试响应:"+jsonString;
+    return "测试 book-log" + ",port:" + port + ";测试响应:" + jsonString;
   }
 
   @RequestMapping(value = "/indexHome", method = RequestMethod.GET)
@@ -60,8 +146,8 @@ public class LogController {
       indexHomeVo.setTotalcount(totalcount);
     } catch (Exception e) {
       log.error("异常:{}", e);
-      indexHomeVo.setErrorMsg(e.getMessage());
-      indexHomeVo.setErrorCode(BookResponse.ERROR_CODE);
+      indexHomeVo.setMsg(e.getMessage());
+      indexHomeVo.setCode(ErrorCode.ERROR_CODE);
     }
     log.info(">>>>>>>>>indexHome resp:{}", JSONObject.toJSONString(indexHomeVo));
     return indexHomeVo;
@@ -88,8 +174,8 @@ public class LogController {
       resp.setTotalcount(totalcount);
     } catch (Exception e) {
       log.error("异常:{}", e);
-      resp.setErrorMsg(e.getMessage());
-      resp.setErrorCode(BookResponse.ERROR_CODE);
+      resp.setMsg(e.getMessage());
+      resp.setCode(ErrorCode.ERROR_CODE);
     }
     log.info(">>>>>>>>>indexHome 响应:{}", JSONObject.toJSONString(resp));
     return resp;
@@ -119,10 +205,14 @@ public class LogController {
           String province = data.getRegion();
           String city = data.getCity();
           String isp = data.getIsp();
-          userAddress = area + "," + province + "," + city + "," + country + "," + isp;
+          if (StringUtils.isBlank(area)) {
+            userAddress = province + "," + city + "," + country + "," + isp;
+          } else {
+            userAddress = area + "," + province + "," + city + "," + country + "," + isp;
+          }
         }
         String ipxy = Arrays.toString(IPAddressMap.getIPXY(userIp));
-        String userJWD = ipxy==null||ipxy.equals("null")?"未知":ipxy;
+        String userJWD = ipxy == null || ipxy.equals("null") ? "未知" : ipxy;
         // new
         tLog.setUserJwd(userJWD);
         tLog.setUserAddress(userAddress);
@@ -130,7 +220,6 @@ public class LogController {
         insert = logService.insert(tLog);
         log.info("+++++保存日志 new end...+++++insert:{}" + insert);
       } else {
-        logDb.setLogId(CommonUtils.uuid());
         logDb.setUserIp(userIp);
         logDb.setOperTime(tLog.getOperTime());
         logDb.setModule(tLog.getModule());

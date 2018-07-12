@@ -2,46 +2,68 @@ package com.cyc.common.po;
 
 import java.io.Serializable;
 
+import javax.persistence.Table;
+
 import lombok.Data;
+
 @Data
-public class TLog extends TLogKey implements Serializable {
-    private static final long serialVersionUID = 1L;
+@Table(name = "t_log")
+public class TLog implements Serializable {
+  private static final long serialVersionUID = 1L;
 
-    private String userName;
+  private long id;
 
-    private String userNickName;
+  private String userIp;
 
-    private String userAddress;
+  private String userName;
 
-    private String userJwd;
+  private String userNickName;
 
-    private String module;
+  private String userAddress;
 
-    private String action;
+  private String userJwd;
 
-    private Long actionTime;
+  private String module;
 
-    private String operTime;
+  private String action;
 
-    private Long count;
+  private Long actionTime;
 
-    public TLog() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+  private String operTime;
 
-    public TLog(String userName, String userNickName, String userAddress, String userJwd, String module, String action,
-            Long actionTime, String operTime, Long count) {
-        super();
-        this.userName = userName;
-        this.userNickName = userNickName;
-        this.userAddress = userAddress;
-        this.userJwd = userJwd;
-        this.module = module;
-        this.action = action;
-        this.actionTime = actionTime;
-        this.operTime = operTime;
-        this.count = count;
-    }
+  private Long count;
 
+  private String browserType;
+  // 浏览器名称和版本
+  private String browserAndVersion;
+  // 浏览器厂商
+  private String manufacturer;
+  // 浏览器引擎
+  private String renderingEngine;
+  // 系统名称
+  private String sysName;
+  // 产品系列
+  private String operatingSystem;
+  // 生成厂商
+  private String sysManufacturer;
+  // 设备类型
+  private String deviceType;
+
+  public TLog() {
+    super();
+  }
+
+  public TLog(String userName, String userNickName, String userAddress, String userJwd, String module, String action,
+    Long actionTime, String operTime, Long count) {
+    super();
+    this.userName = userName;
+    this.userNickName = userNickName;
+    this.userAddress = userAddress;
+    this.userJwd = userJwd;
+    this.module = module;
+    this.action = action;
+    this.actionTime = actionTime;
+    this.operTime = operTime;
+    this.count = count;
+  }
 }

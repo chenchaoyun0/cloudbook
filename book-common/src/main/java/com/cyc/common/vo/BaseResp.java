@@ -1,14 +1,20 @@
  package com.cyc.common.vo;
 
-import com.cyc.common.base.BookResponse;
+import java.io.Serializable;
 
 import lombok.Data;
 @Data
-public class BaseResp extends BookResponse{
+public class BaseResp<T> implements Serializable{
 
   /**
    *
    */
   private static final long serialVersionUID = 1L;
-
+  
+  private int code=0;
+  
+  private String msg;
+  
+  private T data;
+  
 }

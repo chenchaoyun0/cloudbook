@@ -125,4 +125,14 @@ public class LogServiceImpl implements ILogService {
     }
   }
 
+  @Override
+  public long totalPathCount(String path) {
+    try {
+
+      return tLogMapper.totalPathCount(path);
+    } catch (Exception e) {
+      log.error("todayCount 异常,{}", e);
+      throw new RuntimeException(e);
+    }
+  }
 }

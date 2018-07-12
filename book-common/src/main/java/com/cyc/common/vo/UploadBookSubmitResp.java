@@ -15,9 +15,5 @@ public class UploadBookSubmitResp extends BaseResp {
   
   private Book book;
   
-  private String errorMsg;
-  
-  private String successMsg;
-  
   private  List<String> imgList;
 }

@@ -5,28 +5,21 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.cyc.common.po.TLog;
-import com.cyc.common.po.TLogKey;
 import com.cyc.common.vo.TodayCountResp;
-public interface TLogMapper {
-    int deleteByPrimaryKey(TLogKey key);
 
-    int insert(TLog record);
+import tk.mybatis.mapper.common.Mapper;
 
-    int insertSelective(TLog record);
+public interface TLogMapper extends Mapper<TLog> {
+  TLog selectByUserIp(@Param("userIp")String userIp);
 
-    TLog selectByUserIp(String userIp);
+  Long selectLogSumCount();
 
-    TLog selectByPrimaryKey(TLogKey key);
+  List<TLog> selectLogPages(@Param("tLog") TLog tLog);
 
-    int updateByPrimaryKeySelective(TLog record);
+  List<TLog> selectLogPagesForIp(@Param("userIp") String userIp);
 
-    int updateByPrimaryKey(TLog record);
+  TodayCountResp todayCount(@Param("todayBegin") String todayBegin, @Param("todayEnd") String todayEnd);
 
-    Long selectLogSumCount();
-
-    List<TLog> selectLogPages(@Param("tLog") TLog tLog);
-
-    List<TLog> selectLogPagesForIp(@Param("userIp") String userIp);
-    
-    TodayCountResp todayCount(@Param("todayBegin") String todayBegin,@Param("todayEnd") String todayEnd);
+  long totalPathCount(@Param("path") String path);
+  
 }

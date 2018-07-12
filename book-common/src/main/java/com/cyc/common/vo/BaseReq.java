@@ -1,11 +1,10 @@
  package com.cyc.common.vo;
 
-import com.cyc.common.base.BookRequest;
-import com.cyc.common.base.BookResponse;
+import java.io.Serializable;
 
 import lombok.Data;
 @Data
-public class BaseReq extends BookRequest{
+public class BaseReq implements Serializable{
 
   /**
    *

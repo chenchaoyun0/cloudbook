@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cyc.common.base.ErrorCode;
 import com.cyc.common.dictionary.ImgLinkType;
 import com.cyc.common.po.Book;
 import com.cyc.common.po.GridfsImg;
@@ -108,9 +109,8 @@ public class BookController {
           String originalFilename = myfile.getOriginalFilename();
           String imgEnd = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
           if (!BookFileUtils.isImgFile(imgEnd)) {
-            resp.setErrorCode();
             resp.setBook(book);
-            resp.setErrorMsg("请上传jpg格式的图片");
+            resp.setMsg("请上传jpg格式的图片");
             return resp;
           }
 
@@ -143,9 +143,8 @@ public class BookController {
         }
       }
     } catch (Exception e) {
-      resp.setErrorCode();
       resp.setBook(book);
-      resp.setErrorMsg(e.getMessage());
+      resp.setMsg(e.getMessage());
       return resp;
     }
     /**
@@ -160,16 +159,15 @@ public class BookController {
       int i = imgService.batchSaveImg(imgList);
       log.info("保存图片:{}条", i);
     } catch (UserException e) {
-      resp.setErrorCode();
       resp.setBook(book);
-      resp.setErrorMsg(e.getMessage());
+      resp.setMsg(e.getMessage());
       return resp;
     }
 
     List<String> imageBase64StrList = BookFileUtils.getImageBase64StrList(imgList);
     resp.setImgList(imageBase64StrList);
     resp.setBook(book);
-    resp.setSuccessMsg("上传成功");
+    resp.setMsg("上传成功");
     log.info(">>>>>>>>>uploadBookSubmit 响应:{}", JSONObject.toJSONString(resp));
     return resp;
   }
@@ -197,8 +195,7 @@ public class BookController {
       PagedResult<Book> pages = bookService.selectBookPages(book, pageNo, pageSize);
       resp.setPages(pages);
     } catch (Exception e) {
-      resp.setErrorCode();
-      resp.setErrorMsg(e.getMessage());
+      resp.setMsg(e.getMessage());
     }
     //
     log.info(">>>>>>>>>selectBookPages 响应:{}", JSONObject.toJSONString(resp));
@@ -221,8 +218,8 @@ public class BookController {
       resp.setBook(book);
       resp.setImgList(imageBase64StrList);
     } catch (Exception e) {
-      resp.setErrorCode();
-      resp.setErrorMsg(e.getMessage());
+      resp.setCode(ErrorCode.ERROR_CODE);
+      resp.setMsg(e.getMessage());
     }
     log.info(">>>>>>>>>selectBookDetail 响应:{}", JSONObject.toJSONString(resp));
     return  resp;

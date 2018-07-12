@@ -17,8 +17,8 @@ public abstract class BookResponse implements Serializable {
    * 
    */
   private static final long serialVersionUID = 1L;
-  private String errorCode;// 结果代码,返回CCBC00000表示正常，其他为错误代码
-  private String errorMsg;// 错误信息
+  private String errorCode;
+  private String errorMsg;
 
   public final static String SUCESS_CODE = "200";
   public final static String ERROR_CODE = "500";

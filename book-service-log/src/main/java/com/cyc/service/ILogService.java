@@ -21,5 +21,7 @@ public interface ILogService {
   PagedResult<TLog> selectLogPages(TLog tLog, Integer pageNo, Integer pageSize);
 
   PagedResult<TLog> selectLogPagesForIp(String userIp, Integer pageNo, Integer pageSize);
+  
+  long totalPathCount(String path);
 
 }

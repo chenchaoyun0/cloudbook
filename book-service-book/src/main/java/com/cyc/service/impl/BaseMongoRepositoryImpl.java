@@ -7,9 +7,9 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,17 +18,15 @@ import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.data.mongodb.gridfs.GridFsCriteria;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.cyc.common.po.GridfsImg;
 import com.cyc.common.utils.pages.PagedResult;
 import com.cyc.service.IBaseMongoRepository;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBObject;
-import com.mongodb.gridfs.GridFS;
 import com.mongodb.gridfs.GridFSDBFile;
-import com.mongodb.gridfs.GridFSInputFile;
+import com.mongodb.gridfs.GridFSFile;
 
 @Repository("baseMongoRepository")
 public class BaseMongoRepositoryImpl<T> implements IBaseMongoRepository<T> {
@@ -37,6 +35,12 @@ public class BaseMongoRepositoryImpl<T> implements IBaseMongoRepository<T> {
 
   @Resource
   private MongoTemplate mongoTemplate;
+
+  @Autowired
+  private GridFsTemplate gridFsTemplate;
+//  @Autowired
+//  private GridFSBucket gridFSBucket;
+
   @Value("${gridfs.url}")
   private String gridfsUrl;
 
@@ -70,7 +74,7 @@ public class BaseMongoRepositoryImpl<T> implements IBaseMongoRepository<T> {
     Page<T> pagelist = new PageImpl<T>(list, pageable, count);
     int numberOfElements = pagelist.getNumberOfElements();// 当前页条数
     int number = pagelist.getNumber();// 页码
-    //int size = pagelist.getSize();// 分页要求条数
+    // int size = pagelist.getSize();// 分页要求条数
     long totalElements = pagelist.getTotalElements();// 总记录数
     int totalPages = pagelist.getTotalPages();// 总页数
     //
@@ -127,19 +131,11 @@ public class BaseMongoRepositoryImpl<T> implements IBaseMongoRepository<T> {
     String url = null;
     String fileName = gridfsImg.getFileName();
     InputStream in = gridfsImg.getIn();
-    String aliases = gridfsImg.getAliases();
     try {
-      DB db = mongoTemplate.getDb();
-      // 存储fs的根节点
-      GridFS gridFS = new GridFS(db, "fs");
-      GridFSInputFile gfs = gridFS.createFile(in);
-      gfs.put("aliases", aliases);
-      gfs.put("filename", fileName);
-      String contentType = StringUtils.substringAfterLast(fileName, ".");
-      gfs.put("contentType", contentType);
-      gfs.save();
-      Object id = gfs.getId();
-      //占位符替换
+      GridFSFile gridFSFile = gridFsTemplate.store(in, fileName);
+      Object id = gridFSFile.getId().toString();
+      // 占位符替换
+      logger.info("store id:{}",id);
       url = MessageFormat.format(gridfsUrl, id);
     } catch (Exception e) {
       logger.error("saveImg error:{}", e);
@@ -149,29 +145,29 @@ public class BaseMongoRepositoryImpl<T> implements IBaseMongoRepository<T> {
 
   @Override
   public GridFSDBFile getById(Object id) {
-    DBObject query = new BasicDBObject("_id", id);
-    DB db = mongoTemplate.getDb();
-    // 存储fs的根节点
-    GridFS gridFS = new GridFS(db, "fs");
-    GridFSDBFile gridFSDBFile = gridFS.findOne(query);
+    Query query = new Query(GridFsCriteria.where("_id").is(id));
+    GridFSDBFile gridFSDBFile = gridFsTemplate.findOne(query);
     return gridFSDBFile;
   }
 
   @Override
   public InputStream getInputStreamById(Object id) {
-    GridFSDBFile gridFSDBFile = getById(id);
-    InputStream inputStream = gridFSDBFile.getInputStream();
-
+    InputStream inputStream = null;
+    try {
+      GridFSDBFile gridFSDBFile = getById(id);
+      //GridFSDownloadStream gridFSDownloadStream = gridFSBucket.openDownloadStream(gridFSFile.getObjectId());
+      //GridFsResource gridFsResource = new GridFsResource(gridFSFile, gridFSDownloadStream);
+      inputStream = gridFSDBFile.getInputStream();
+    } catch (Exception e) {
+      logger.error("getInputStreamById error:{}", e);
+    }
     return inputStream;
   }
 
   @Override
   public void delFile(Object id) {
-    DBObject query = new BasicDBObject("_id", id);
-    DB db = mongoTemplate.getDb();
-    // 存储fs的根节点
-    GridFS gridFS = new GridFS(db, "fs");
-    gridFS.remove(query);
+    Query query = new Query(GridFsCriteria.where("_id").is(id));
+    gridFsTemplate.delete(query);
   }
 
 }

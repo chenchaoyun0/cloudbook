@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cyc.common.po.BlackLisEntity;
 import com.cyc.common.po.TLog;
+import com.cyc.common.po.VisitorProfile;
 import com.cyc.common.vo.IndexHomeForIpResp;
 import com.cyc.common.vo.IndexHomeResp;
 
@@ -26,4 +28,22 @@ public interface IBookLogClient {
   
   @RequestMapping(value = "/saveLog", method = RequestMethod.POST)
   public int saveLog(@RequestBody TLog tLog);
+  
+  @RequestMapping(value = "/totalPathCount", method = RequestMethod.GET)
+  public long totalPathCount(@RequestParam(value = "path")String path);
+  
+  @RequestMapping(value = "/saveVisitorProfile", method = RequestMethod.POST)
+  public int saveVisitorProfile(@RequestBody VisitorProfile visitorProfile);
+  
+  
+  @RequestMapping(value = "/saveBlackLisEntity", method = RequestMethod.POST)
+  public int saveBlackLisEntity(BlackLisEntity blackLisEntity);
+  
+  
+  @RequestMapping(value = "/updateBlackLisEntitySelective", method = RequestMethod.POST)
+  public int updateBlackLisEntitySelective(BlackLisEntity blackLisEntity);
+  
+  
+  @RequestMapping(value = "/selectBlackLisEntityByIp", method = RequestMethod.GET)
+  public BlackLisEntity selectBlackLisEntityByIp(@RequestParam(value = "ip") String ip);
 }
