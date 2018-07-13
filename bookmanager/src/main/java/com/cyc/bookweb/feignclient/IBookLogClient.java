@@ -46,4 +46,7 @@ public interface IBookLogClient {
   
   @RequestMapping(value = "/selectBlackLisEntityByIp", method = RequestMethod.GET)
   public BlackLisEntity selectBlackLisEntityByIp(@RequestParam(value = "ip") String ip);
+  
+  @RequestMapping(value = "/visitors", method = RequestMethod.GET)
+  public String visitors();
 }

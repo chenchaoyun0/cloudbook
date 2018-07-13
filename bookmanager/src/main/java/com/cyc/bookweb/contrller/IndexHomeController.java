@@ -3,6 +3,7 @@ package com.cyc.bookweb.contrller;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,19 @@ public class IndexHomeController {
   @Autowired
   private IBookLogClient bookLogService;
 
+  @RequestMapping(value = "/visitors", method = RequestMethod.GET)
+  public void visitors(HttpServletResponse response) {
+
+    try {
+      String visitors = bookLogService.visitors();
+      response.setCharacterEncoding("GBK");
+      response.getWriter().write(visitors);
+    } catch (Exception e) {
+      log.error("visitors error:{}", e);
+    }
+
+  }
+  
   @RequestMapping(value = "/lookResume", method = RequestMethod.POST)
   @CrossOrigin
   public @ResponseBody LookResumeResp lookResume(@RequestBody LookResumeReq req,HttpServletRequest request) {
