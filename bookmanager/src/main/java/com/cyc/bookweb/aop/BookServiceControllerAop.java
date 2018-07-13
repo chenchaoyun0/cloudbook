@@ -24,6 +24,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.cyc.bookweb.feignclient.IBookLogClient;
 import com.cyc.common.po.TLog;
 import com.cyc.common.utils.FaceAppContextUtils;
+import com.cyc.common.utils.apaddress.IPUtils;
 import com.cyc.common.utils.time.DateConvertUtils;
 
 import eu.bitwalker.useragentutils.Browser;
@@ -94,8 +95,8 @@ public class BookServiceControllerAop {
       // 记录下请求内容
       log.info("请求URL : {}", request.getRequestURL().toString());
       log.info("请求方式HTTP_METHOD : {}", request.getMethod());
-      String remoteAddr = request.getRemoteAddr();
-      log.info("请求IP : {}", remoteAddr);
+      String ip = IPUtils.getIpAddr(request);
+      log.info("请求IP : {}", ip);
       String action = joinPoint.getSignature().getName();
       String module = joinPoint.getTarget().getClass().getSimpleName();
       log.info("请求CLASS_METHOD : {}",
@@ -105,7 +106,7 @@ public class BookServiceControllerAop {
        * 构造参数
        */
       TLog tLog = new TLog();
-      tLog.setUserIp(remoteAddr);
+      tLog.setUserIp(ip);
       tLog.setAction(action);
       tLog.setActionTime(actionTime);
       tLog.setCount(1l);
