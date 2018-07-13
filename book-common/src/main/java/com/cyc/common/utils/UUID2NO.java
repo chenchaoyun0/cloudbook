@@ -1,7 +1,5 @@
 package com.cyc.common.utils;
 
-import cn.itcast.commons.CommonUtils;
-
 public class UUID2NO {
     public static String getUUID2NO() {
         String uuid = CommonUtils.uuid().toLowerCase();

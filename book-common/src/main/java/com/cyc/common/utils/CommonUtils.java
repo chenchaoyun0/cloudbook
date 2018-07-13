@@ -1,4 +1,4 @@
-package cn.itcast.commons;
+package com.cyc.common.utils;
 
 import java.util.Map;
 import java.util.UUID;

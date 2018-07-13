@@ -104,7 +104,7 @@ if (dataName != null && dataName.length() > 0) {
 	，手机商城:<a style="color: lime;" href="http://39.105.33.58:8081/AShopping" target="_bank">http://www.ccy123.cn/AShopping/</a>
 	<br/>
 	<br/>
-	Zookeeper节点管理:<a style="color: lime;" href="http://39.105.33.58:8081/zkWeb" target="_bank">http://www.ccy123.cn/zkWeb/</a>
+	Zookeeper节点管理:<a style="color: lime;" href="http://www.shopbop.ink/zkWeb/" target="_bank">http://www.ccy123.cn/zkWeb/</a>
 	，Dubbo:<a style="color: lime;" href="http://39.105.33.58:8081/dubbo-admin" target="_bank">http://www.ccy123.cn/dubbo-admin/</a>
 	<br/>
 	<br/>

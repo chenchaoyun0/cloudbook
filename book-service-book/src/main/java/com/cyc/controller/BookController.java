@@ -29,6 +29,7 @@ import com.cyc.common.po.Book;
 import com.cyc.common.po.GridfsImg;
 import com.cyc.common.po.TImg;
 import com.cyc.common.po.User;
+import com.cyc.common.utils.CommonUtils;
 import com.cyc.common.utils.exception.UserException;
 import com.cyc.common.utils.file.BookFileUtils;
 import com.cyc.common.utils.pages.PagedResult;
@@ -41,8 +42,6 @@ import com.cyc.common.vo.UploadBookSubmitResp;
 import com.cyc.service.IBaseMongoRepository;
 import com.cyc.service.IBookService;
 import com.cyc.service.IImgService;
-
-import cn.itcast.commons.CommonUtils;
 
 @RestController
 public class BookController {

@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cyc.bookweb.feignclient.IBookBookClient;
 import com.cyc.common.po.Book;
 import com.cyc.common.po.User;
+import com.cyc.common.utils.CommonUtils;
 import com.cyc.common.utils.UUID2NO;
 import com.cyc.common.utils.pages.PagedResult;
 import com.cyc.common.vo.SelectBookDetailReq;
@@ -32,7 +33,6 @@ import com.cyc.common.vo.SelectBookPagesResp;
 import com.cyc.common.vo.UploadBookSubmitReq;
 import com.cyc.common.vo.UploadBookSubmitResp;
 
-import cn.itcast.commons.CommonUtils;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller

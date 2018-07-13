@@ -1,4 +1,4 @@
-package cn.itcast.commons;
+package com.cyc.common.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
