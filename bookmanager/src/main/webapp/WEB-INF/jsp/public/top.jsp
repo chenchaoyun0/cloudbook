@@ -66,7 +66,7 @@
                 </div>
                 </c:if>                
                 <span class="vertical-line">|</span>
-                <a class="a-float-left" href="${pageContext.request.contextPath}/resume" style="color: white;">个人在线简历</a>
+                <a class="a-float-left" href="http://www.shopbop.ink/" style="color: white;">个人在线简历</a>
                 <span class="vertical-line">|</span>
                 <a class="a-float-left" href="<c:url value='/indexHome'/>" style="color: white;">访客统计</a>
                 <span class="vertical-line">|</span>
