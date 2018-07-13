@@ -21,10 +21,10 @@ README
 ------
 |#|标题|连接|
 |---|----|-----|
-|1|`[项目演示地址]`|[项目演示地址](http://www.shopbop.ink/bookmanager/indexHome "悬停显示")|
-|2|`[我的网站]`|[我的网站](http://www.shopbop.ink/ "悬停显示")|
-|3|`[我的博客]`|[我的博客](http://https://blog.csdn.net/sinat_22767969 "悬停显示")|
-|4|`[项目GitHub]`|[项目GitHub](https://github.com/chenchaoyun0/cloudbook "悬停显示")|
+|1|`[项目演示地址]`|[http://www.shopbop.ink/bookmanager/indexHome](http://www.shopbop.ink/bookmanager/indexHome "悬停显示")|
+|2|`[我的网站]`|[http://www.shopbop.ink/](http://www.shopbop.ink/ "悬停显示")|
+|3|`[我的博客]`|[http://https://blog.csdn.net/sinat_22767969](http://https://blog.csdn.net/sinat_22767969 "悬停显示")|
+|4|`[项目GitHub]`|[https://github.com/chenchaoyun0/cloudbook](https://github.com/chenchaoyun0/cloudbook "悬停显示")|
 
 # 网站技术栈
 ****
