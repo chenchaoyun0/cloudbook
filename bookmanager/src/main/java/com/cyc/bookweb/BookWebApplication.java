@@ -30,7 +30,7 @@ public class BookWebApplication extends SpringBootServletInitializer implements 
 
   public static void main(String[] args) throws Exception {
     new SpringApplicationBuilder(BookWebApplication.class).web(true).run(args);
-    log.info(">>>>>图书管理系统启动成功!");
+    log.info(">>>>>图书管理系统主服务启动成功!");
   }
 
   public void customize(ConfigurableEmbeddedServletContainer container) {
