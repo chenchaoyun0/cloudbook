@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cyc.common.utils.LogUtil;
-import com.cyc.common.utils.apaddress.IPUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,7 +20,7 @@ public class TestController {
   public void getSessionId(HttpServletRequest request, HttpServletResponse response) {
 
     try {
-      String ipAddr = IPUtils.getIpAddr(request);
+      String ipAddr = request.getLocalAddr();
       Object o = request.getSession().getAttribute("springboot");
       if (o == null) {
         o = "spring boot redis session 测试,由 ip:" + ipAddr + "端口:" + request.getLocalPort() + "生成";

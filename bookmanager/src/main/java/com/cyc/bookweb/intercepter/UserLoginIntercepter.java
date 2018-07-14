@@ -8,6 +8,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cyc.common.po.User;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class UserLoginIntercepter implements HandlerInterceptor {
     // 执行Handler完成执行此方法
     // 应用场景：统一异常处理，统一日志处理
