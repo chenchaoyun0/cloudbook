@@ -34,3 +34,6 @@ README
 # 网站流程图
 ****
 ![](https://github.com/chenchaoyun0/cloudbook/blob/master/framework.svg)
+# 项目部分截图
+****
+![](https://github.com/chenchaoyun0/cloudbook/blob/master/index.jpg)
