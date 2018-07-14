@@ -53,7 +53,7 @@ if (dataName != null && dataName.length() > 0) {
 </c:if>
 <c:if test="${pages.total gt 0 }">
         <table align="center" width="100%">
-                <tr style="color: red;font-weight: bolder;">
+                <tr style="color:white; font-weight: bolder;">
                         <th >用户名</th>
                         <th >用户IP</th>
                         <th >访问时间</th>
@@ -95,21 +95,20 @@ if (dataName != null && dataName.length() > 0) {
     </div>
 	<div align="center" style="color: white;">
 	<br/>
-	Gerrit:<a style="color: lime;" href="http://www.shopbop.ink/gerrit" target="_bank">http://www.shopbop.ink/gerrit</a>，
-	Jenkins:<a style="color: lime;" href="http://www.lilinjue.cn:8081" target="_bank">http://www.longge1987.cn/jenkins/</a>
-	，ActiveMQ:<a style="color: lime;" href="http://www.lilinjue.cn:8161/admin/queues.jsp" target="_bank">http://www.longge1987.cn:8161/admin/queues.jsp</a>
+	项目gitHub:<a style="color: lime;" href="https://github.com/chenchaoyun0/cloudbook" target="_bank">https://github.com/chenchaoyun0/cloudbook</a>
+	，Jenkins:<a style="color: lime;" href="http://www.lilinjue.cn:8081" target="_bank">http://www.longge1987.cn/jenkins/</a>
+	，Zookeeper节点管理:<a style="color: lime;" href="http://www.shopbop.ink/zkWeb/" target="_bank">http://www.ccy123.cn/zkWeb/</a>
 	<br/>
 	<br/>
 	私服库:<a style="color: lime;" href="http://www.lilinjue.cn:8080/nexus" target="_bank">http://www.longge1987.cn:8080/nexus/</a>
-	，手机商城:<a style="color: lime;" href="http://39.105.33.58:8081/AShopping" target="_bank">http://www.ccy123.cn/AShopping/</a>
+	，Kafka-offset-monitor:<a style="color: lime;" href="http://39.105.33.58:8086/#/" target="_bank">http://39.105.33.58:8086/#/</a>
 	<br/>
 	<br/>
-	Zookeeper节点管理:<a style="color: lime;" href="http://www.shopbop.ink/zkWeb/" target="_bank">http://www.ccy123.cn/zkWeb/</a>
 	，Dubbo:<a style="color: lime;" href="http://39.105.33.58:8081/dubbo-admin" target="_bank">http://www.ccy123.cn/dubbo-admin/</a>
 	<br/>
 	<br/>
-	项目gitHub:<a style="color: lime;" href="https://github.com/chenchaoyun0/cloudbook" target="_bank">https://github.com/chenchaoyun0/cloudbook</a>
-	，博客:<a style="color: lime;" href="http://blog.csdn.net/sinat_22767969" target="_bank">http://blog.csdn.net/sinat_22767969</a>
+Gerrit:<a style="color: lime;" href="http://www.shopbop.ink/gerrit" target="_bank">http://www.shopbop.ink/gerrit</a>，	
+博客:<a style="color: lime;" href="http://blog.csdn.net/sinat_22767969" target="_bank">http://blog.csdn.net/sinat_22767969</a>
 	<br/>
 	<br/>
 	备案/许可证编号:<a style="color: lime;" href="http://www.miitbeian.gov.cn" target="_bank">桂ICP备16001571</a>
