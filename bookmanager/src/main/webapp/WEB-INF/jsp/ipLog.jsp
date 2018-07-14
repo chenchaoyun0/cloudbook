@@ -108,7 +108,7 @@ if (dataName != null && dataName.length() > 0) {
 	，Dubbo:<a style="color: lime;" href="http://39.105.33.58:8081/dubbo-admin" target="_bank">http://www.ccy123.cn/dubbo-admin/</a>
 	<br/>
 	<br/>
-	项目gitHub:<a style="color: lime;" href="https://github.com/chenchaoyun0" target="_bank">https://github.com/chenchaoyun0</a>
+	项目gitHub:<a style="color: lime;" href="https://github.com/chenchaoyun0/cloudbook" target="_bank">https://github.com/chenchaoyun0/cloudbook</a>
 	，博客:<a style="color: lime;" href="http://blog.csdn.net/sinat_22767969" target="_bank">http://blog.csdn.net/sinat_22767969</a>
 	<br/>
 	<br/>

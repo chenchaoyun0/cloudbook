@@ -68,7 +68,7 @@
     <li><a href="#contact">联系我</a></li>
     <li><a href="${pageContext.request.contextPath}/book/selectBookPages"
      class="active" target="_bank">项目首页</a></li>
-    <li><a href="https://github.com/chenchaoyun0/bookmanager"
+    <li><a href="https://github.com/chenchaoyun0/cloudbook"
      class="active" target="_bank">项目gitHub</a></li>
       <li>
         <EMBED src=jj-qt.mp3 width=300 height=45 type=audio/mpeg loop="true" autostart="true" volume="100"></EMBED>
@@ -179,7 +179,7 @@
      <div class="clear"></div>
       <blockquote style="font-size: 17px">
       <p>
-       <b>项目gitHub:&nbsp;&nbsp;<a style="color: lime;" href="https://github.com/chenchaoyun0" target="_bank">https://github.com/chenchaoyun0</a></b>
+       <b>项目gitHub:&nbsp;&nbsp;<a style="color: lime;" href="https://github.com/chenchaoyun0/cloudbook" target="_bank">https://github.com/chenchaoyun0/cloudbook</a></b>
       </p>
       <p>
        <b>博客:&nbsp;&nbsp;<a style="color: lime;" href="http://blog.csdn.net/sinat_22767969" target="_bank">http://blog.csdn.net/sinat_22767969</a></b>
@@ -419,7 +419,7 @@
      </fieldset>
      <div class="clear"></div>
      <ul class="social_icons">
-      <li><a href="https://github.com/chenchaoyun0" target="_bank" id="fb" original-title="Join My Fan Club">
+      <li><a href="https://github.com/chenchaoyun0/cloudbook" target="_bank" id="fb" original-title="Join My Fan Club">
         <img height="26px"
         src="${pageContext.request.contextPath}/m2/images/github.png"
         alt="Facebook" />
