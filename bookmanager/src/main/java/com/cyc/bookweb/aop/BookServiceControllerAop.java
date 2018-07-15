@@ -137,7 +137,7 @@ public class BookServiceControllerAop {
       // 浏览器
       Browser browser = agent.getBrowser();
       // 浏览器版本
-      Version version = agent.getBrowserVersion();
+      Version version = agent.getBrowserVersion()==null?new Version("未知", "未知", "未知"):agent.getBrowserVersion();
       // 系统
       OperatingSystem os = agent.getOperatingSystem();
       /**
