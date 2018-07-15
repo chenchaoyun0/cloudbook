@@ -14,13 +14,12 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cyc.bookweb.context.BlackListThreadLoacal;
 import com.cyc.bookweb.feignclient.IBookLogClient;
 import com.cyc.common.po.TLog;
 import com.cyc.common.utils.FaceAppContextUtils;
@@ -91,6 +90,7 @@ public class BookServiceControllerAop {
       long end = System.currentTimeMillis();
       long actionTime = end - start;
       log.info("++++++方法执行时间为:" + (actionTime));
+      
       HttpServletRequest request = FaceAppContextUtils.getCurrentRequest();
       // 记录下请求内容
       log.info("请求URL : {}", request.getRequestURL().toString());
@@ -102,6 +102,17 @@ public class BookServiceControllerAop {
       log.info("请求CLASS_METHOD : {}",
         joinPoint.getSignature().getDeclaringTypeName() + "." + action);
       log.info("请求参数ARGS : {}", Arrays.toString(joinPoint.getArgs()));
+      
+      /**
+       * 爬虫黑名单不记录日志
+       */
+      boolean b = BlackListThreadLoacal.getFlagBlackIp();
+      if(b){
+        log.info("++++++爬虫黑名单不记录日志,ip:{}",ip);
+        return o;
+      }
+      
+      
       /**
        * 构造参数
        */

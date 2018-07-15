@@ -75,7 +75,7 @@
                 <a class="a-float-left" href="<c:url value='ebook/selectEBookPages.action'/>" style="color: white;">所有电子书</a>
                 <span class="vertical-line">|</span>
 
-                    <a target="_bank" href="http://123.207.168.248:9099/" style="color: white;">Eureka Spring</a>
+                    <a target="_bank" href="http://123.207.168.248:9099/" style="color: white;">Eureka</a>
                 <c:if test="${sessionScope.userLogin.userRole eq 1}">
                 <div data-toggle="arrowdown" id="arrow7" class="user-name">
                     <i class="fa fa-list-ul fa-orange"></i>

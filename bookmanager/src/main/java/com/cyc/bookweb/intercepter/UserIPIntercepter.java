@@ -10,6 +10,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cyc.bookweb.context.BlackListThreadLoacal;
 import com.cyc.bookweb.feignclient.IBookLogClient;
 import com.cyc.common.po.BlackLisEntity;
 import com.cyc.common.utils.apaddress.IPUtils;
@@ -124,7 +125,8 @@ public class UserIPIntercepter implements HandlerInterceptor {
         //
         int updateByPrimaryKey = bookLogService.updateBlackLisEntitySelective(blackLisEntity);
         log.info("ip：{}已被禁止访问,updateByPrimaryKey:{}", ip, updateByPrimaryKey);
-        return false;
+        BlackListThreadLoacal.setFlagBlackIp(true);
+        return true;
 
       } else {
 
@@ -154,7 +156,8 @@ public class UserIPIntercepter implements HandlerInterceptor {
           int insert = bookLogService.saveBlackLisEntity(blackLisEntity);
 
           log.info("ip：{}已被禁止访问,insert:{}", ip, insert);
-          return false;
+          BlackListThreadLoacal.setFlagBlackIp(true);
+          return true;
         } else {
           return true;
         }
