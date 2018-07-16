@@ -122,16 +122,9 @@ public class IndexHomeController {
       }
     }
     log.info("通过ip解析用户地址:{}", userAddress);
-
     //
     log.info("查看网站主页 http://www.shopbop.ink/");
     try {
-
-      // save
-      VisitorProfile visitorProfile = BookManagerBeanUtils.copyBean(req, VisitorProfile.class);
-      visitorProfile.setCreateTime(DateConvertUtils.format(new Date(), DateConvertUtils.DATE_TIME_FORMAT));
-      visitorProfile.setIp(ipAddr);
-      visitorProfile.setAddress(userAddress);
 
       /**
        * 保存用户浏览器信息
@@ -166,16 +159,9 @@ public class IndexHomeController {
       // 设备类型
       DeviceType deviceType = os.getDeviceType();
       // 浏览器信息
-      visitorProfile.setBrowserAndVersion(browserAndVersion);
-      visitorProfile.setBrowserType(browserType.name());
-      visitorProfile.setManufacturer(manufacturer.name());
-      visitorProfile.setRenderingEngine(renderingEngine.name());
-      visitorProfile.setSysName(sysName);
-      visitorProfile.setOperatingSystem(operatingSystem.name());
-      visitorProfile.setSysManufacturer(sysManufacturer.name());
-      visitorProfile.setDeviceType(deviceType.name());
-
-      int insert = bookLogService.saveVisitorProfile(visitorProfile);
+      
+      
+      int insert = bookLogService.saveLog(visitorProfile);
       log.info("保存用户信息:{}", insert);
 
     } catch (Exception e) {
