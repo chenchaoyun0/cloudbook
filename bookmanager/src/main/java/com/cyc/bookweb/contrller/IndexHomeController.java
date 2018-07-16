@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cyc.bookweb.context.BlackListThreadLoacal;
 import com.cyc.bookweb.feignclient.IBookLogClient;
 import com.cyc.common.base.ErrorCode;
 import com.cyc.common.po.TLog;
@@ -63,13 +64,11 @@ public class IndexHomeController {
     }
 
   }
-  
+
   @RequestMapping(value = "/lookResume", method = RequestMethod.POST)
   @CrossOrigin
-  public @ResponseBody LookResumeResp lookResume(@RequestBody LookResumeReq req,HttpServletRequest request) {
-
+  public @ResponseBody LookResumeResp lookResume(@RequestBody LookResumeReq req, HttpServletRequest request) {
     log.info("查看网站主页 req:{}", JSONObject.toJSONString(req));
-
     log.info("浏览器的正式名称:{}", req.getAppName());
     log.info("浏览器的版本号:{}", req.getAppVersion());
     log.info("返回用户浏览器是否启用了cookie:{}", req.getCookieEnabled());
@@ -80,9 +79,31 @@ public class IndexHomeController {
     log.info("关于浏览器更多信息（IE没有）:{}", req.getProductSub());
     log.info("userAgent:{}", req.getUserAgent());
     log.info("返回一个UserProfile对象，它存储用户的个人信息（火狐没有）:{}", req.getUserProfile());
-    
     String ipAddr = IPUtils.getIpAddr(request);
     log.info("用户ip地址:{}", ipAddr);
+
+    LookResumeResp resp = new LookResumeResp();
+    // resp
+    IndexHomeResp indexHomeVo = bookLogService.indexHome(1, 1);
+    PagedResult<TLog> pages = indexHomeVo.getPages();
+    TodayCountResp todayCount = indexHomeVo.getTodayCount();
+    Long totalcount = indexHomeVo.getTotalcount();
+    long totalPathCount = bookLogService.totalPathCount("lookResume");
+    //
+    resp.setTodayCount(todayCount.getTodayCount());
+    resp.setTodayVisitorCount(todayCount.getTodayVisitorCount());
+    resp.setTotalcount(totalcount);
+    resp.setResumeCount(totalPathCount);
+    resp.setTotalVisitorCount(pages.getPages());
+
+    boolean b = BlackListThreadLoacal.getFlagBlackIp();
+    if (b) {
+      return resp;
+    }
+
+    /**
+     * 保存
+     */
     String userAddress = "";
     IPAddressVo ipAddressVo = AddressUtils.getIPAddressVo(ipAddr);
     if (ipAddressVo == null || !"0".equals(ipAddressVo.getCode())) {
@@ -94,44 +115,44 @@ public class IndexHomeController {
       String province = data.getRegion();
       String city = data.getCity();
       String isp = data.getIsp();
-      if(StringUtils.isBlank(area)){
+      if (StringUtils.isBlank(area)) {
         userAddress = province + "," + city + "," + country + "," + isp;
-      }else{
+      } else {
         userAddress = area + "," + province + "," + city + "," + country + "," + isp;
       }
     }
     log.info("通过ip解析用户地址:{}", userAddress);
 
     //
-    LookResumeResp resp = new LookResumeResp();
     log.info("查看网站主页 http://www.shopbop.ink/");
     try {
-      
+
       // save
       VisitorProfile visitorProfile = BookManagerBeanUtils.copyBean(req, VisitorProfile.class);
       visitorProfile.setCreateTime(DateConvertUtils.format(new Date(), DateConvertUtils.DATE_TIME_FORMAT));
       visitorProfile.setIp(ipAddr);
       visitorProfile.setAddress(userAddress);
-      
+
       /**
        * 保存用户浏览器信息
        */
       String agentStr = request.getHeader("user-agent");
-      log.info("用户浏览器信息agentStr:{}",agentStr);
+      log.info("用户浏览器信息agentStr:{}", agentStr);
       UserAgent agent = UserAgent.parseUserAgentString(agentStr);
       // 浏览器
-      Browser browser = agent.getBrowser()==null?Browser.UNKNOWN:agent.getBrowser();
+      Browser browser = agent.getBrowser() == null ? Browser.UNKNOWN : agent.getBrowser();
       // 浏览器版本
       Version version = agent.getBrowserVersion();
       // 系统
-      OperatingSystem os = agent.getOperatingSystem()==null?OperatingSystem.UNKNOWN:agent.getOperatingSystem();
+      OperatingSystem os = agent.getOperatingSystem() == null ? OperatingSystem.UNKNOWN : agent.getOperatingSystem();
       /**
        * 保存字段
        */
       // 浏览器类型
       BrowserType browserType = browser.getBrowserType();
       // 浏览器名称和版本
-      String browserAndVersion = String.format("%s-%s", browser.getGroup().getName(), version==null?"未知":version.getVersion());
+      String browserAndVersion
+        = String.format("%s-%s", browser.getGroup().getName(), version == null ? "未知" : version.getVersion());
       // 浏览器厂商
       Manufacturer manufacturer = browser.getManufacturer();
       // 浏览器引擎
@@ -144,7 +165,7 @@ public class IndexHomeController {
       Manufacturer sysManufacturer = os.getManufacturer();
       // 设备类型
       DeviceType deviceType = os.getDeviceType();
-   // 浏览器信息
+      // 浏览器信息
       visitorProfile.setBrowserAndVersion(browserAndVersion);
       visitorProfile.setBrowserType(browserType.name());
       visitorProfile.setManufacturer(manufacturer.name());
@@ -153,21 +174,10 @@ public class IndexHomeController {
       visitorProfile.setOperatingSystem(operatingSystem.name());
       visitorProfile.setSysManufacturer(sysManufacturer.name());
       visitorProfile.setDeviceType(deviceType.name());
-      
+
       int insert = bookLogService.saveVisitorProfile(visitorProfile);
       log.info("保存用户信息:{}", insert);
-      
-      IndexHomeResp indexHomeVo = bookLogService.indexHome(1, 1);
-      PagedResult<TLog> pages = indexHomeVo.getPages();
-      TodayCountResp todayCount = indexHomeVo.getTodayCount();
-      Long totalcount = indexHomeVo.getTotalcount();
-      long totalPathCount = bookLogService.totalPathCount("lookResume");
-      //
-      resp.setTodayCount(todayCount.getTodayCount());
-      resp.setTodayVisitorCount(todayCount.getTodayVisitorCount());
-      resp.setTotalcount(totalcount);
-      resp.setResumeCount(totalPathCount);
-      resp.setTotalVisitorCount(pages.getPages());
+
     } catch (Exception e) {
       log.error("查看网站主页异常:{}", e);
       resp.setCode(ErrorCode.ERROR_CODE);
