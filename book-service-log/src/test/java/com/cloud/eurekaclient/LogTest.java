@@ -61,6 +61,7 @@ public class LogTest {
     tLog.setActionTime(29l);
     tLog.setCount(0l);
     tLog.setModule("IndexHomeController");
+    tLog.setUserAgent("setUserAgent");
     tLog.setUserJwd("未知");
     tLog.setOperTime("2017-03-09 02:29:38:655");
     tLog.setUserAddress("未分配或者内网IP----");

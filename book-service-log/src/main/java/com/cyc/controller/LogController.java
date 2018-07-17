@@ -190,9 +190,10 @@ public class LogController {
         tLog.setUserJwd(userJWD);
         tLog.setUserAddress(userAddress);
         log.info("+++++保存日志 new begin...参数" + JSONObject.toJSONString(tLog));
-        insert = logService.insert(tLog);
+        insert = logService.insertSelective(tLog);
         log.info("+++++保存日志 new end...+++++insert:{}" + insert);
       } else {
+        logDb.setUserAgent(tLog.getUserAgent());
         logDb.setUserIp(userIp);
         logDb.setOperTime(tLog.getOperTime());
         logDb.setModule(tLog.getModule());
@@ -200,7 +201,7 @@ public class LogController {
         logDb.setActionTime(tLog.getActionTime());
         logDb.setId(null);
         log.info("+++++保存日志 exit begin...参数" + JSONObject.toJSONString(logDb));
-        insert = logService.insert(logDb);
+        insert = logService.insertSelective(logDb);
         log.info("+++++保存日志 exit end...+++++insert:{}" + insert);
       }
     } catch (Exception e) {
