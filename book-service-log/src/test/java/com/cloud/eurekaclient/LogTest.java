@@ -89,5 +89,10 @@ public class LogTest {
     TodayCountResp todayCount = logService.todayCount();
     logger.info("+++++:{}", JSONObject.toJSON(todayCount));
   }
+  @Test
+  public void testVisitors() {
+    String visitors = logService.visitors();
+    logger.info("+++++visitors:{}", JSONObject.toJSON(visitors));
+  }
 
 }

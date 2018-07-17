@@ -23,5 +23,7 @@ public interface ILogService {
   PagedResult<TLog> selectLogPagesForIp(String userIp, Integer pageNo, Integer pageSize);
   
   long totalPathCount(String path);
+  
+  public String visitors();
 
 }

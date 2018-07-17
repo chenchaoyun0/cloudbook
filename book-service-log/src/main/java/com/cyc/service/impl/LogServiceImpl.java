@@ -3,13 +3,13 @@ package com.cyc.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cyc.common.base.ErrorCode;
 import com.cyc.common.po.TLog;
+import com.cyc.common.utils.LogUtil;
 import com.cyc.common.utils.exception.UserException;
 import com.cyc.common.utils.pages.BeanUtil;
 import com.cyc.common.utils.pages.PagedResult;
@@ -18,11 +18,14 @@ import com.cyc.common.vo.TodayCountResp;
 import com.cyc.mapper.TLogMapper;
 import com.cyc.service.ILogService;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
+import lombok.extern.slf4j.Slf4j;
+import tk.mybatis.mapper.entity.Example;
 
 @Service("logService")
+@Slf4j
 public class LogServiceImpl implements ILogService {
-
-  private static final Logger log = LoggerFactory.getLogger(LogServiceImpl.class);
 
   @Autowired
   private TLogMapper tLogMapper;
@@ -133,6 +136,27 @@ public class LogServiceImpl implements ILogService {
     } catch (Exception e) {
       log.error("todayCount 异常,{}", e);
       throw new RuntimeException(e);
+    }
+  }
+
+  @Override
+  public String visitors() {
+    try {
+      int pageNo = 1;
+      int pageSize =20;
+      PageHelper.startPage(pageNo, pageSize);
+      Example example = new Example(TLog.class);
+      example.createCriteria().andEqualTo("action", "lookResume");
+      example.orderBy("id").desc();
+      List<TLog> list = tLogMapper.selectByExample(example);
+      //
+      PageInfo<TLog> pageInfo = new PageInfo<>(list);
+      String jsonString = JSONObject.toJSONString(pageInfo);
+      String formatAsJSON = LogUtil.formatAsJSON(jsonString);
+      return formatAsJSON;
+    } catch (Exception e) {
+      log.error("异常:{}", e);
+      return ErrorCode.ERROR_CODE + e.getMessage();
     }
   }
 }

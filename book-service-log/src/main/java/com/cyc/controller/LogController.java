@@ -50,13 +50,13 @@ public class LogController {
 
   @Autowired
   private BlackListMapper blackListMapper;
-  
+
   @Autowired
   private TLogMapper tLogMapper;
 
   @RequestMapping(value = "/selectBlackLisEntityByIp", method = RequestMethod.GET)
   public BlackLisEntity selectBlackLisEntityByIp(@RequestParam(value = "ip") String ip) {
-    BlackLisEntity blackLisEntity=null;
+    BlackLisEntity blackLisEntity = null;
     try {
       Example example = new Example(BlackLisEntity.class);
       example.createCriteria().andEqualTo("ip", ip);
@@ -92,20 +92,8 @@ public class LogController {
   }
 
   @RequestMapping(value = "/visitors", method = RequestMethod.GET)
-  public String visitors(HttpServletResponse response) {
-    try {
-      Example example = new Example(TLog.class);
-      example.createCriteria().andEqualTo("action", "lookResume");
-      List<TLog> list = tLogMapper.selectByExample(example);
-      
-      String jsonString = JSONObject.toJSONString(list);
-      String formatAsJSON = LogUtil.formatAsJSON(jsonString);
-      return formatAsJSON;
-    } catch (Exception e) {
-      log.error("异常:{}", e);
-    }
-    return ErrorCode.ERROR_CODE + "";
-
+  public String visitors() {
+    return logService.visitors();
   }
 
   @RequestMapping(value = "/totalPathCount", method = RequestMethod.GET)
