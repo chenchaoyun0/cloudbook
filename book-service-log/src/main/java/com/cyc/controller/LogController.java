@@ -202,6 +202,7 @@ public class LogController {
         logDb.setModule(tLog.getModule());
         logDb.setAction(tLog.getAction());
         logDb.setActionTime(tLog.getActionTime());
+        logDb.setId(null);
         log.info("+++++保存日志 exit begin...参数" + JSONObject.toJSONString(logDb));
         insert = logService.insert(logDb);
         log.info("+++++保存日志 exit end...+++++insert:{}" + insert);
