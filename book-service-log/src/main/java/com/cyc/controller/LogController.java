@@ -30,7 +30,6 @@ import com.cyc.common.vo.IndexHomeForIpResp;
 import com.cyc.common.vo.IndexHomeResp;
 import com.cyc.common.vo.TodayCountResp;
 import com.cyc.mapper.BlackListMapper;
-import com.cyc.mapper.TLogMapper;
 import com.cyc.service.ILogService;
 
 import tk.mybatis.mapper.entity.Example;
@@ -47,9 +46,6 @@ public class LogController {
 
   @Autowired
   private BlackListMapper blackListMapper;
-
-  @Autowired
-  private TLogMapper tLogMapper;
 
   @RequestMapping(value = "/selectBlackLisEntityByIp", method = RequestMethod.GET)
   public BlackLisEntity selectBlackLisEntityByIp(@RequestParam(value = "ip") String ip) {

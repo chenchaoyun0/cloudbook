@@ -44,6 +44,7 @@ public class BookServiceControllerAop {
 
   @Autowired
   private IBookLogClient bookLogService;
+
   /**
    * 指定切方法
    */
@@ -80,7 +81,7 @@ public class BookServiceControllerAop {
   @Around("access()")
   public Object arround(ProceedingJoinPoint joinPoint) {
     log.info("@Around...");
-    Object o=null;
+    Object o = null;
     try {
       long start = System.currentTimeMillis();
       log.info("方法环绕start...");
@@ -90,7 +91,7 @@ public class BookServiceControllerAop {
       long end = System.currentTimeMillis();
       long actionTime = end - start;
       log.info("++++++方法执行时间为:" + (actionTime));
-      
+
       HttpServletRequest request = FaceAppContextUtils.getCurrentRequest();
       // 记录下请求内容
       log.info("请求URL : {}", request.getRequestURL().toString());
@@ -99,20 +100,18 @@ public class BookServiceControllerAop {
       log.info("请求IP : {}", ip);
       String action = joinPoint.getSignature().getName();
       String module = joinPoint.getTarget().getClass().getSimpleName();
-      log.info("请求CLASS_METHOD : {}",
-        joinPoint.getSignature().getDeclaringTypeName() + "." + action);
+      log.info("请求CLASS_METHOD : {}", joinPoint.getSignature().getDeclaringTypeName() + "." + action);
       log.info("请求参数ARGS : {}", Arrays.toString(joinPoint.getArgs()));
-      
+
       /**
        * 爬虫黑名单不记录日志
        */
       boolean b = BlackListThreadLoacal.getFlagBlackIp();
-      if(b){
-        log.info("++++++爬虫黑名单不记录日志,ip:{}",ip);
+      if (b) {
+        log.info("++++++爬虫黑名单不记录日志,ip:{}", ip);
         return o;
       }
-      
-      
+
       /**
        * 构造参数
        */
@@ -127,17 +126,17 @@ public class BookServiceControllerAop {
       tLog.setUserName(userName);
       String userNickName = "未设置";
       tLog.setUserNickName(userNickName);
-      
+
       /**
        * 保存用户浏览器信息
        */
       String agentStr = request.getHeader("user-agent");
-      log.info("用户浏览器信息agentStr:{}",agentStr);
+      log.info("用户浏览器信息agentStr:{}", agentStr);
       UserAgent agent = UserAgent.parseUserAgentString(agentStr);
       // 浏览器
       Browser browser = agent.getBrowser();
       // 浏览器版本
-      Version version = agent.getBrowserVersion()==null?new Version("未知", "未知", "未知"):agent.getBrowserVersion();
+      Version version = agent.getBrowserVersion() == null ? new Version("未知", "未知", "未知") : agent.getBrowserVersion();
       // 系统
       OperatingSystem os = agent.getOperatingSystem();
       /**
@@ -159,8 +158,8 @@ public class BookServiceControllerAop {
       Manufacturer sysManufacturer = os.getManufacturer();
       // 设备类型
       DeviceType deviceType = os.getDeviceType();
-      
-   // 浏览器信息
+
+      // 浏览器信息
       tLog.setUserAgent(agentStr);
       tLog.setBrowserAndVersion(browserAndVersion);
       tLog.setBrowserType(browserType.name());
@@ -170,9 +169,10 @@ public class BookServiceControllerAop {
       tLog.setOperatingSystem(operatingSystem.name());
       tLog.setSysManufacturer(sysManufacturer.name());
       tLog.setDeviceType(deviceType.name());
-      
+
+      log.info("切面保存日志 tLog:{}", JSONObject.toJSONString(tLog));
       int i = bookLogService.saveLog(tLog);
-      log.info("切面保存日志 resp:{}",i);
+      log.info("切面保存日志 resp:{}", i);
     } catch (Throwable e) {
       log.error("异常:{}", e);
     }
