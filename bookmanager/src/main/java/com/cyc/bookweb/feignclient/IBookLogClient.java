@@ -32,11 +32,11 @@ public interface IBookLogClient {
   public long totalPathCount(@RequestParam(value = "path")String path);
   
   @RequestMapping(value = "/saveBlackLisEntity", method = RequestMethod.POST)
-  public int saveBlackLisEntity(BlackLisEntity blackLisEntity);
+  public int saveBlackLisEntity(@RequestBody BlackLisEntity blackLisEntity);
   
   
   @RequestMapping(value = "/updateBlackLisEntitySelective", method = RequestMethod.POST)
-  public int updateBlackLisEntitySelective(BlackLisEntity blackLisEntity);
+  public int updateBlackLisEntitySelective(@RequestBody BlackLisEntity blackLisEntity);
   
   
   @RequestMapping(value = "/selectBlackLisEntityByIp", method = RequestMethod.GET)

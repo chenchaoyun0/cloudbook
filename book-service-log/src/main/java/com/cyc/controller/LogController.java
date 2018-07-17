@@ -62,7 +62,7 @@ public class LogController {
   }
 
   @RequestMapping(value = "/updateBlackLisEntitySelective", method = RequestMethod.POST)
-  public int updateBlackLisEntitySelective(BlackLisEntity blackLisEntity) {
+  public int updateBlackLisEntitySelective(@RequestBody BlackLisEntity blackLisEntity) {
     try {
       Example exampleUpdate = new Example(BlackLisEntity.class);
       exampleUpdate.createCriteria().andEqualTo("id", blackLisEntity.getId());
@@ -75,7 +75,7 @@ public class LogController {
   }
 
   @RequestMapping(value = "/saveBlackLisEntity", method = RequestMethod.POST)
-  public int saveBlackLisEntity(BlackLisEntity blackLisEntity) {
+  public int saveBlackLisEntity(@RequestBody BlackLisEntity blackLisEntity) {
     try {
       return blackListMapper.insert(blackLisEntity);
     } catch (Exception e) {
