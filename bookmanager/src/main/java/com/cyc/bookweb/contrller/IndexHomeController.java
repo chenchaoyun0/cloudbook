@@ -21,8 +21,6 @@ import com.cyc.bookweb.context.BlackListThreadLoacal;
 import com.cyc.bookweb.feignclient.IBookLogClient;
 import com.cyc.common.base.ErrorCode;
 import com.cyc.common.po.TLog;
-import com.cyc.common.po.VisitorProfile;
-import com.cyc.common.utils.BookManagerBeanUtils;
 import com.cyc.common.utils.apaddress.AddressUtils;
 import com.cyc.common.utils.apaddress.IPAddressData;
 import com.cyc.common.utils.apaddress.IPAddressVo;
@@ -159,9 +157,27 @@ public class IndexHomeController {
       // 设备类型
       DeviceType deviceType = os.getDeviceType();
       // 浏览器信息
-      
-      
-      int insert = bookLogService.saveLog(visitorProfile);
+      TLog tLog = new TLog();
+      tLog.setUserIp(ipAddr);
+      tLog.setAction("lookResume");
+      tLog.setActionTime(0l);
+      tLog.setCount(1l);
+      tLog.setModule("IndexHomeController");
+      tLog.setOperTime(DateConvertUtils.format(new Date(), DateConvertUtils.DATE_TIME_SSSS));
+      String userName = "游客用户";
+      tLog.setUserName(userName);
+      String userNickName = "未设置";
+      tLog.setUserNickName(userNickName);
+      // 浏览器信息
+      tLog.setBrowserAndVersion(browserAndVersion);
+      tLog.setBrowserType(browserType.name());
+      tLog.setManufacturer(manufacturer.name());
+      tLog.setRenderingEngine(renderingEngine.name());
+      tLog.setSysName(sysName);
+      tLog.setOperatingSystem(operatingSystem.name());
+      tLog.setSysManufacturer(sysManufacturer.name());
+      tLog.setDeviceType(deviceType.name());
+      int insert = bookLogService.saveLog(tLog);
       log.info("保存用户信息:{}", insert);
 
     } catch (Exception e) {

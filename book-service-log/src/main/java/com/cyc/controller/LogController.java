@@ -23,7 +23,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.cyc.common.base.ErrorCode;
 import com.cyc.common.po.BlackLisEntity;
 import com.cyc.common.po.TLog;
-import com.cyc.common.po.VisitorProfile;
 import com.cyc.common.utils.LogUtil;
 import com.cyc.common.utils.apaddress.AddressUtils;
 import com.cyc.common.utils.apaddress.IPAddressData;
@@ -34,8 +33,8 @@ import com.cyc.common.vo.IndexHomeForIpResp;
 import com.cyc.common.vo.IndexHomeResp;
 import com.cyc.common.vo.TodayCountResp;
 import com.cyc.mapper.BlackListMapper;
+import com.cyc.mapper.TLogMapper;
 import com.cyc.service.ILogService;
-import com.cyc.service.IVisitorProfileService;
 
 import tk.mybatis.mapper.entity.Example;
 
@@ -50,10 +49,10 @@ public class LogController {
   private String port;
 
   @Autowired
-  private IVisitorProfileService visitorProfileService;
-
-  @Autowired
   private BlackListMapper blackListMapper;
+  
+  @Autowired
+  private TLogMapper tLogMapper;
 
   @RequestMapping(value = "/selectBlackLisEntityByIp", method = RequestMethod.GET)
   public BlackLisEntity selectBlackLisEntityByIp(@RequestParam(value = "ip") String ip) {
@@ -92,21 +91,14 @@ public class LogController {
     return 0;
   }
 
-  @RequestMapping(value = "/saveVisitorProfile", method = RequestMethod.POST)
-  public int saveVisitorProfile(@RequestBody VisitorProfile visitorProfile) {
-    try {
-      return visitorProfileService.insert(visitorProfile);
-    } catch (Exception e) {
-      log.error("异常:{}", e);
-    }
-    return 0;
-  }
-
   @RequestMapping(value = "/visitors", method = RequestMethod.GET)
   public String visitors(HttpServletResponse response) {
     try {
-      List<VisitorProfile> visitors = visitorProfileService.visitors();
-      String jsonString = JSONObject.toJSONString(visitors);
+      Example example = new Example(TLog.class);
+      example.createCriteria().andEqualTo("action", "lookResume");
+      List<TLog> list = tLogMapper.selectByExample(example);
+      
+      String jsonString = JSONObject.toJSONString(list);
       String formatAsJSON = LogUtil.formatAsJSON(jsonString);
       return formatAsJSON;
     } catch (Exception e) {
