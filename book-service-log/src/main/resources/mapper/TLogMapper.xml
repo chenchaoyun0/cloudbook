@@ -57,7 +57,7 @@
         <result
             column="user_agent"
             property="userAgent"
-            jdbcType="LONGTEXT" />
+            jdbcType="VARCHAR" />
         <result
             column="browser_And_Version"
             property="browserAndVersion"
