@@ -158,6 +158,7 @@ public class IndexHomeController {
       DeviceType deviceType = os.getDeviceType();
       // 浏览器信息
       TLog tLog = new TLog();
+      tLog.setUserAgent(agentStr);
       tLog.setUserIp(ipAddr);
       tLog.setAction("lookResume");
       tLog.setActionTime(0l);

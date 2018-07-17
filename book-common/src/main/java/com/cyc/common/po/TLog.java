@@ -32,6 +32,8 @@ public class TLog implements Serializable {
   private String operTime;
 
   private Long count;
+  
+  private String userAgent;
 
   private String browserType;
   // 浏览器名称和版本

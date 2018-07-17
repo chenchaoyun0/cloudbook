@@ -55,6 +55,10 @@
             property="browserType"
             jdbcType="VARCHAR" />
         <result
+            column="user_agent"
+            property="userAgent"
+            jdbcType="LONGTEXT" />
+        <result
             column="browser_And_Version"
             property="browserAndVersion"
             jdbcType="VARCHAR" />

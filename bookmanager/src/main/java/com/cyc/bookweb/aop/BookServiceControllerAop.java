@@ -161,6 +161,7 @@ public class BookServiceControllerAop {
       DeviceType deviceType = os.getDeviceType();
       
    // 浏览器信息
+      tLog.setUserAgent(agentStr);
       tLog.setBrowserAndVersion(browserAndVersion);
       tLog.setBrowserType(browserType.name());
       tLog.setManufacturer(manufacturer.name());
