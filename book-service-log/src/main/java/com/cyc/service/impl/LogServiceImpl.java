@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cyc.common.base.ErrorCode;
+import com.cyc.common.po.BlackLisEntity;
 import com.cyc.common.po.TLog;
 import com.cyc.common.utils.LogUtil;
 import com.cyc.common.utils.exception.UserException;
@@ -15,6 +16,7 @@ import com.cyc.common.utils.pages.BeanUtil;
 import com.cyc.common.utils.pages.PagedResult;
 import com.cyc.common.utils.time.DateConvertUtils;
 import com.cyc.common.vo.TodayCountResp;
+import com.cyc.mapper.BlackListMapper;
 import com.cyc.mapper.TLogMapper;
 import com.cyc.service.ILogService;
 import com.github.pagehelper.PageHelper;
@@ -27,6 +29,9 @@ import tk.mybatis.mapper.entity.Example;
 @Slf4j
 public class LogServiceImpl implements ILogService {
 
+  @Autowired
+  private BlackListMapper blackListMapper;
+  
   @Autowired
   private TLogMapper tLogMapper;
 
@@ -158,5 +163,15 @@ public class LogServiceImpl implements ILogService {
       log.error("异常:{}", e);
       return ErrorCode.ERROR_CODE + e.getMessage();
     }
+  }
+
+  @Override
+  public int saveBlackLisEntity(BlackLisEntity blackLisEntity) {
+    try {
+      return blackListMapper.insert(blackLisEntity);
+    } catch (Exception e) {
+      log.error("异常:{}", e);
+    }
+    return 0;
   }
 }

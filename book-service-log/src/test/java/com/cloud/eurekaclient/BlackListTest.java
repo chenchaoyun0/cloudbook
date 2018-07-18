@@ -12,6 +12,7 @@ import com.cyc.BookLogApplication;
 import com.cyc.common.po.BlackLisEntity;
 import com.cyc.common.utils.time.DateConvertUtils;
 import com.cyc.mapper.BlackListMapper;
+import com.cyc.service.ILogService;
 
 import lombok.extern.slf4j.Slf4j;
 import tk.mybatis.mapper.entity.Example;
@@ -22,6 +23,8 @@ import tk.mybatis.mapper.entity.Example;
 public class BlackListTest {
   @Autowired
   private BlackListMapper blackListMapper;
+  @Autowired
+  private ILogService logService;
 
   @Test
   public void visitors() {
@@ -46,5 +49,12 @@ public class BlackListTest {
 
     }
   }
-
+  @Test
+  public void saveBlackLisEntity(){
+    BlackLisEntity blackLisEntity = new BlackLisEntity();
+    blackLisEntity.setCount(1l);
+    blackLisEntity.setIp("127.0.0.1");
+    int insert = logService.saveBlackLisEntity(blackLisEntity);
+    log.info("insert:{}",  insert);
+  }
 }

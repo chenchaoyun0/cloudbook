@@ -76,12 +76,7 @@ public class LogController {
 
   @RequestMapping(value = "/saveBlackLisEntity", method = RequestMethod.POST)
   public int saveBlackLisEntity(@RequestBody BlackLisEntity blackLisEntity) {
-    try {
-      return blackListMapper.insert(blackLisEntity);
-    } catch (Exception e) {
-      log.error("异常:{}", e);
-    }
-    return 0;
+    return logService.saveBlackLisEntity(blackLisEntity);
   }
 
   @RequestMapping(value = "/visitors", method = RequestMethod.GET)
