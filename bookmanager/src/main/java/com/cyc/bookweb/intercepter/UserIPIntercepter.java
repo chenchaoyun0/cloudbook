@@ -110,6 +110,7 @@ public class UserIPIntercepter implements HandlerInterceptor {
 
       if (blackLisEntity != null) {
         // 更新次数
+        blackLisEntity.setUserAgent(agentStr);
         blackLisEntity.setCount(blackLisEntity.getCount() + 1);
         blackLisEntity.setLasttime(lasttime);
         blackLisEntity.setPath(path);
@@ -139,6 +140,7 @@ public class UserIPIntercepter implements HandlerInterceptor {
 
         if (b || c || d || e) {
           blackLisEntity = new BlackLisEntity();
+          blackLisEntity.setUserAgent(agentStr);
           blackLisEntity.setCount(1l);
           blackLisEntity.setLasttime(lasttime);
           blackLisEntity.setPath(path);

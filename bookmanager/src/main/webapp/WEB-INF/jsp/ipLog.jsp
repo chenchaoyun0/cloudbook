@@ -19,11 +19,11 @@
             <%-- <EMBED src="${pageContext.request.contextPath}/music/jj-qt.mp3" width="300" height="45" type="audio/mpeg" loop="true" autostart="true" volume="100"></EMBED> --%>
             </div>
         <div align="center" style="margin-top:10px">
-<p style="color:aqua;font-weight: bolder;font-size: 20px;font-family:cursive;">今日总访问人数：${todayCount.todayVisitorCount}人，今日总访问量：${todayCount.todayCount}次</p>
+<p style="color:aqua;font-weight: bolder;font-size: 20px;font-family:cursive;">今日总访问人数：${todayCount.todayVisitorCount} 人，今日总访问量：${todayCount.todayCount} 次</p>
 <br/>
-<p style="color: aqua;font-weight: bolder;font-size: 20px;font-family:cursive;">总访问人数：${pages.total}人，总访问量：${totalcount}次</p>
+<p style="color: aqua;font-weight: bolder;font-size: 20px;font-family:cursive;">总访问人数：${pages.total} 人，总访问量：${totalcount} 次，网站爬虫量：${totalBlackList} 次</p>
 <br/>
-<a style="color: lime;font-weight: bold;" href="http://www.shopbop.ink" target="_bank">点此查看他在线简历</a>
+<a style="color: lime;font-weight: bold;font-family:cursive;" href="http://www.shopbop.ink" target="_bank">点此查看他在线简历</a>
 <br/>
 </div>
 
