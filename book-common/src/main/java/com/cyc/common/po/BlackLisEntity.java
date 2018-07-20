@@ -32,4 +32,6 @@ public class BlackLisEntity implements Serializable {
   private String sysManufacturer;
   // 设备类型
   private String deviceType;
+  
+  private String userAgent;
 }

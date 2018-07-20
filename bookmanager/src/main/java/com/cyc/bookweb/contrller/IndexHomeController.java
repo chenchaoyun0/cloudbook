@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSONObject;
 import com.cyc.bookweb.context.BlackListThreadLoacal;
 import com.cyc.bookweb.feignclient.IBookLogClient;
+import com.cyc.common.po.BlackLisEntity;
 import com.cyc.common.po.TLog;
 import com.cyc.common.utils.LogUtil;
 import com.cyc.common.utils.apaddress.IPUtils;
@@ -27,6 +28,7 @@ import com.cyc.common.vo.LookResumeResp;
 import com.cyc.common.vo.SelectBlackListResp;
 import com.cyc.common.vo.TodayCountResp;
 import com.cyc.common.vo.VisitorsResp;
+import com.github.pagehelper.PageInfo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -116,12 +118,19 @@ public class IndexHomeController {
     PagedResult<TLog> pages = indexHomeVo.getPages();
     TodayCountResp todayCount = indexHomeVo.getTodayCount();
     Long totalcount = indexHomeVo.getTotalcount();
+    SelectBlackListResp resp = bookLogService.selectBlackList();
+    long totalBlackList=0;
+    if (resp.success()) {
+      PageInfo<BlackLisEntity> pageInfo = resp.getPageInfo();
+      totalBlackList=pageInfo.getTotal();
+    }
     //
     String url = request.getRequestURI();
     pages.setUrl(url);
     model.addAttribute("pages", pages);
     model.addAttribute("totalcount", totalcount);
     model.addAttribute("todayCount", todayCount);
+    model.addAttribute("totalBlackList", totalBlackList);
     log.info(">>>>>>>>>pages getTotal:{}", JSONObject.toJSON(pages.getTotal()));
     return "ipLog";
   }

@@ -10,7 +10,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.cyc.common.base.ErrorCode;
 import com.cyc.common.po.BlackLisEntity;
 import com.cyc.common.po.TLog;
-import com.cyc.common.utils.LogUtil;
 import com.cyc.common.utils.exception.UserException;
 import com.cyc.common.utils.pages.BeanUtil;
 import com.cyc.common.utils.pages.PagedResult;
@@ -159,8 +158,6 @@ public class LogServiceImpl implements ILogService {
       List<TLog> list = tLogMapper.selectByExample(example);
       //
       PageInfo<TLog> pageInfo = new PageInfo<>(list);
-      String jsonString = JSONObject.toJSONString(pageInfo);
-      String formatAsJSON = LogUtil.formatAsJSON(jsonString);
       resp.setPageInfo(pageInfo);
       return resp;
     } catch (Exception e) {
@@ -188,7 +185,9 @@ public class LogServiceImpl implements ILogService {
       int pageNo = 1;
       int pageSize = 20;
       PageHelper.startPage(pageNo, pageSize);
-      List<BlackLisEntity> list = blackListMapper.selectAll();
+      Example example = new Example(BlackLisEntity.class);
+      example.orderBy("id").desc();
+      List<BlackLisEntity> list = blackListMapper.selectByExample(example);
       //
       PageInfo<BlackLisEntity> pageInfo = new PageInfo<>(list);
       resp.setPageInfo(pageInfo);

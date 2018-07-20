@@ -17,4 +17,8 @@ public class BaseResp<T> implements Serializable{
   
   private T data;
   
+  public boolean success(){
+    return this.code==0?true:false;
+  }
+  
 }
