@@ -10,6 +10,8 @@ import com.cyc.common.po.BlackLisEntity;
 import com.cyc.common.po.TLog;
 import com.cyc.common.vo.IndexHomeForIpResp;
 import com.cyc.common.vo.IndexHomeResp;
+import com.cyc.common.vo.SelectBlackListResp;
+import com.cyc.common.vo.VisitorsResp;
 
 @FeignClient(value = "book-log")
 public interface IBookLogClient {
@@ -43,5 +45,10 @@ public interface IBookLogClient {
   public BlackLisEntity selectBlackLisEntityByIp(@RequestParam(value = "ip") String ip);
   
   @RequestMapping(value = "/visitors", method = RequestMethod.GET)
-  public String visitors();
+  public VisitorsResp visitors();
+  
+  @RequestMapping(value = "/selectBlackList", method = RequestMethod.GET)
+  public SelectBlackListResp selectBlackList();
+  
+  
 }

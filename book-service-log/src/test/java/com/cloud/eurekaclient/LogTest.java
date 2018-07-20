@@ -17,6 +17,7 @@ import com.cyc.common.po.Student;
 import com.cyc.common.po.TLog;
 import com.cyc.common.utils.pages.PagedResult;
 import com.cyc.common.vo.TodayCountResp;
+import com.cyc.common.vo.VisitorsResp;
 import com.cyc.mapper.StudentMapper;
 import com.cyc.service.ILogService;
 
@@ -92,8 +93,8 @@ public class LogTest {
   }
   @Test
   public void testVisitors() {
-    String visitors = logService.visitors();
-    logger.info("+++++visitors:{}", JSONObject.toJSON(visitors));
+    VisitorsResp visitorsResp = logService.visitors();
+    logger.info("+++++visitors:{}", JSONObject.toJSON(visitorsResp));
   }
 
 }

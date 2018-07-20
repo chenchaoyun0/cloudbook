@@ -28,7 +28,9 @@ import com.cyc.common.utils.apaddress.IPAddressVo;
 import com.cyc.common.utils.pages.PagedResult;
 import com.cyc.common.vo.IndexHomeForIpResp;
 import com.cyc.common.vo.IndexHomeResp;
+import com.cyc.common.vo.SelectBlackListResp;
 import com.cyc.common.vo.TodayCountResp;
+import com.cyc.common.vo.VisitorsResp;
 import com.cyc.mapper.BlackListMapper;
 import com.cyc.service.ILogService;
 
@@ -47,6 +49,11 @@ public class LogController {
   @Autowired
   private BlackListMapper blackListMapper;
 
+  @RequestMapping(value = "/selectBlackList", method = RequestMethod.GET)
+  public SelectBlackListResp selectBlackList() {
+   return logService.selectBlackList();
+  }
+  
   @RequestMapping(value = "/selectBlackLisEntityByIp", method = RequestMethod.GET)
   public BlackLisEntity selectBlackLisEntityByIp(@RequestParam(value = "ip") String ip) {
     BlackLisEntity blackLisEntity = null;
@@ -80,7 +87,7 @@ public class LogController {
   }
 
   @RequestMapping(value = "/visitors", method = RequestMethod.GET)
-  public String visitors() {
+  public VisitorsResp visitors() {
     return logService.visitors();
   }
 
@@ -204,5 +211,5 @@ public class LogController {
     }
     return insert;
   }
-
+  
 }

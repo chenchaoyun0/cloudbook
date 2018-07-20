@@ -17,13 +17,16 @@ import com.alibaba.fastjson.JSONObject;
 import com.cyc.bookweb.context.BlackListThreadLoacal;
 import com.cyc.bookweb.feignclient.IBookLogClient;
 import com.cyc.common.po.TLog;
+import com.cyc.common.utils.LogUtil;
 import com.cyc.common.utils.apaddress.IPUtils;
 import com.cyc.common.utils.pages.PagedResult;
 import com.cyc.common.vo.IndexHomeForIpResp;
 import com.cyc.common.vo.IndexHomeResp;
 import com.cyc.common.vo.LookResumeReq;
 import com.cyc.common.vo.LookResumeResp;
+import com.cyc.common.vo.SelectBlackListResp;
 import com.cyc.common.vo.TodayCountResp;
+import com.cyc.common.vo.VisitorsResp;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,13 +37,30 @@ public class IndexHomeController {
   @Autowired
   private IBookLogClient bookLogService;
 
+  @RequestMapping(value = "/selectBlackList", method = RequestMethod.GET)
+  public void selectBlackList(HttpServletResponse response) {
+
+    try {
+      SelectBlackListResp resp = bookLogService.selectBlackList();
+      response.setCharacterEncoding("GBK");
+      String jsonString = JSONObject.toJSONString(resp);
+      String formatAsJSON = LogUtil.formatAsJSON(jsonString);
+      response.getWriter().write(formatAsJSON);
+    } catch (Exception e) {
+      log.error("visitors error:{}", e);
+    }
+
+  }
+
   @RequestMapping(value = "/visitors", method = RequestMethod.GET)
   public void visitors(HttpServletResponse response) {
 
     try {
-      String visitors = bookLogService.visitors();
+      VisitorsResp resp = bookLogService.visitors();
       response.setCharacterEncoding("GBK");
-      response.getWriter().write(visitors);
+      String jsonString = JSONObject.toJSONString(resp);
+      String formatAsJSON = LogUtil.formatAsJSON(jsonString);
+      response.getWriter().write(formatAsJSON);
     } catch (Exception e) {
       log.error("visitors error:{}", e);
     }

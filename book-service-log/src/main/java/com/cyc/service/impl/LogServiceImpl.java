@@ -15,7 +15,9 @@ import com.cyc.common.utils.exception.UserException;
 import com.cyc.common.utils.pages.BeanUtil;
 import com.cyc.common.utils.pages.PagedResult;
 import com.cyc.common.utils.time.DateConvertUtils;
+import com.cyc.common.vo.SelectBlackListResp;
 import com.cyc.common.vo.TodayCountResp;
+import com.cyc.common.vo.VisitorsResp;
 import com.cyc.mapper.BlackListMapper;
 import com.cyc.mapper.TLogMapper;
 import com.cyc.service.ILogService;
@@ -31,7 +33,7 @@ public class LogServiceImpl implements ILogService {
 
   @Autowired
   private BlackListMapper blackListMapper;
-  
+
   @Autowired
   private TLogMapper tLogMapper;
 
@@ -145,10 +147,11 @@ public class LogServiceImpl implements ILogService {
   }
 
   @Override
-  public String visitors() {
+  public VisitorsResp visitors() {
+    VisitorsResp resp = new VisitorsResp();
     try {
       int pageNo = 1;
-      int pageSize =20;
+      int pageSize = 20;
       PageHelper.startPage(pageNo, pageSize);
       Example example = new Example(TLog.class);
       example.createCriteria().andEqualTo("action", "lookResume");
@@ -158,10 +161,13 @@ public class LogServiceImpl implements ILogService {
       PageInfo<TLog> pageInfo = new PageInfo<>(list);
       String jsonString = JSONObject.toJSONString(pageInfo);
       String formatAsJSON = LogUtil.formatAsJSON(jsonString);
-      return formatAsJSON;
+      resp.setPageInfo(pageInfo);
+      return resp;
     } catch (Exception e) {
       log.error("异常:{}", e);
-      return ErrorCode.ERROR_CODE + e.getMessage();
+      resp.setCode(ErrorCode.ERROR_CODE);
+      resp.setMsg(e.getMessage());
+      return resp;
     }
   }
 
@@ -173,5 +179,25 @@ public class LogServiceImpl implements ILogService {
       log.error("异常:{}", e);
     }
     return 0;
+  }
+
+  @Override
+  public SelectBlackListResp selectBlackList() {
+    SelectBlackListResp resp = new SelectBlackListResp();
+    try {
+      int pageNo = 1;
+      int pageSize = 20;
+      PageHelper.startPage(pageNo, pageSize);
+      List<BlackLisEntity> list = blackListMapper.selectAll();
+      //
+      PageInfo<BlackLisEntity> pageInfo = new PageInfo<>(list);
+      resp.setPageInfo(pageInfo);
+      return resp;
+    } catch (Exception e) {
+      log.error("异常:{}", e);
+      resp.setCode(ErrorCode.ERROR_CODE);
+      resp.setMsg(e.getMessage());
+      return resp;
+    }
   }
 }
