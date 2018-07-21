@@ -13,7 +13,7 @@
 <!-- 顶部导航 start -->
     <jsp:include page="public/top.jsp"></jsp:include>
 <div align="center" style="margin-top: 20px" >
-                <a href="<c:url value='/book/selectBookPages'/>"><img src="<c:url value='img/myheader.jpeg'/>" style="width: 150px;height: 100px;" alt="数通图书"/>
+                <a href="<c:url value='/book/selectBookPages'/>"><img src="<c:url value='img/myheader.png'/>" style="width: 150px;height: 100px;" alt="数通图书"/>
                 </a>
             <%-- <object height="100" width="100" data="${pageContext.request.contextPath}/music/jj-qt.mp3"></object> --%>
             <%-- <EMBED src="${pageContext.request.contextPath}/music/jj-qt.mp3" width="300" height="45" type="audio/mpeg" loop="true" autostart="true" volume="100"></EMBED> --%>

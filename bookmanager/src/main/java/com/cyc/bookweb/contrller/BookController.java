@@ -17,14 +17,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cyc.bookweb.feignclient.IBookBookClient;
 import com.cyc.common.po.Book;
+import com.cyc.common.po.TImg;
 import com.cyc.common.po.User;
 import com.cyc.common.utils.CommonUtils;
 import com.cyc.common.utils.UUID2NO;
+import com.cyc.common.utils.file.BookFileUtils;
 import com.cyc.common.utils.pages.PagedResult;
 import com.cyc.common.vo.SelectBookDetailReq;
 import com.cyc.common.vo.SelectBookDetailResp;
@@ -134,5 +138,66 @@ public class BookController {
     model.addAttribute("book", book);
     model.addAttribute("imgList", imgList);
     return "book/bookDetail";
+  }
+  
+  @RequestMapping(value = "updateBookInput/{bookId}", method = { RequestMethod.GET })
+  public String updateBook(@PathVariable("bookId") String bookId, Model model) {
+      Book book = bookBookClient.selectByPrimaryKey(bookId);
+      model.addAttribute("book", book);
+      //
+      TImg tImg = new TImg();
+      tImg.setLinkId(bookId);
+      log.info("查询图书图片begin...");
+      List<TImg> imgList = bookBookClient.selectList(tImg);
+      log.info("查询图书图片end...imgList:{}", JSONObject.toJSON(imgList));
+      List<String> imageBase64StrList =BookFileUtils.getImageBase64StrList(imgList);
+      model.addAttribute("imgList", imageBase64StrList);
+      return "book/updateBook";
+  }
+
+  @RequestMapping(value = "updateBookSubmit", method = { RequestMethod.POST })
+  public String updateBookSubmit(@ModelAttribute("book") Book book, Model model, HttpServletRequest request) {
+      // ...方便测试暂时不做校验
+      String sessionCode = (String) request.getSession().getAttribute("session_vcode");
+      String paramCode = request.getParameter("verifyCode");
+      if (!paramCode.equalsIgnoreCase(sessionCode)) {// 验证码
+          model.addAttribute("book", book);
+          request.setAttribute("error_code", "验证码错误");
+          return "book/updateBook";
+      }
+      bookBookClient.updateByPrimaryKeySelective(book);
+      model.addAttribute("book", book);
+      model.addAttribute("successMsg", "更新成功");
+      return "book/updateBook";
+  }
+  
+  @RequestMapping("/admin")
+  public String admin() {
+      return "/admin/bookadmin";
+  }
+
+  @RequestMapping("/adminData")
+  @ResponseBody
+  public PagedResult<Book> adminData(Book book, Integer pageNo, Integer pageSize) {
+      User user = new User();
+      book.setUser(user);
+      SelectBookPagesReq req = new SelectBookPagesReq(book, pageNo, pageSize);
+      SelectBookPagesResp resp = bookBookClient.selectBookPages(req);
+      PagedResult<Book> list = resp.getPages();
+      return list;
+  }
+
+  @RequestMapping("/unmountBook/{bookId}")
+  @ResponseBody
+  public int unmountBook(@PathVariable("bookId") String bookId) {
+
+      return bookBookClient.unmountBook(bookId);
+  }
+
+  @RequestMapping("/mountBook/{bookId}")
+  @ResponseBody
+  public int mountBook(@PathVariable("bookId") String bookId) {
+
+      return bookBookClient.mountBook(bookId);
   }
 }

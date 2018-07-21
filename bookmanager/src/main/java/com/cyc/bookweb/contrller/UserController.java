@@ -39,12 +39,13 @@ import com.cyc.common.utils.exception.UserException;
 import com.cyc.common.utils.mail.Mail;
 import com.cyc.common.utils.mail.MailUtils;
 import com.cyc.common.utils.pages.PagedResult;
+import com.cyc.common.vo.SelectUserPagesReq;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
   private static final Logger log = LoggerFactory.getLogger(UserController.class);
-//  @Autowired
+  @Autowired
   private IBookUserClient userService;
 
   @RequestMapping("/indexHome")
@@ -139,7 +140,8 @@ public class UserController {
     /**
      * 第一个注册用户为管理员
      */
-    PagedResult<User> selectUserPages = userService.selectUserPages(null, null, null);
+    SelectUserPagesReq req = new SelectUserPagesReq();
+    PagedResult<User> selectUserPages = userService.selectUserPages(req);
     if (selectUserPages.getTotal() == 0) {
       user.setUserRole(1);
     } else {
@@ -309,7 +311,8 @@ public class UserController {
   @RequestMapping("/adminData")
   @ResponseBody
   public PagedResult<User> adminData(User user, Integer pageNo, Integer pageSize) {
-    PagedResult<User> list = userService.selectUserPages(user, pageNo, pageSize);
+    SelectUserPagesReq req = new SelectUserPagesReq(user, pageNo, pageSize);
+    PagedResult<User> list = userService.selectUserPages(req);
     return list;
   }
 
@@ -318,13 +321,4 @@ public class UserController {
   public int updatePermission(@PathVariable("userId") String userId) {
     return userService.updatePermission(userId);
   }
-
-  @RequestMapping("/chatWithRobot")
-  @ResponseBody
-  public String chatWithRobot(@RequestParam("user_say") String user_say) {
-    String robotRes = userService.chatWithRobot(user_say);
-    log.info("chatWithRobot:req:{},res:{}", user_say, robotRes);
-    return robotRes;
-  }
-
 }

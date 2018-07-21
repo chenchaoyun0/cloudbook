@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cyc.BookLogApplication;
 import com.cyc.common.po.BlackLisEntity;
 import com.cyc.common.utils.time.DateConvertUtils;
+import com.cyc.common.vo.VisitorsResp;
 import com.cyc.mapper.BlackListMapper;
 import com.cyc.service.ILogService;
 
@@ -56,5 +58,10 @@ public class BlackListTest {
     blackLisEntity.setIp("127.0.0.1");
     int insert = logService.saveBlackLisEntity(blackLisEntity);
     log.info("insert:{}",  insert);
+  }
+  @Test
+  public void test(){
+    VisitorsResp visitors = logService.visitors();
+    log.info("------------->:{}",JSONObject.toJSONString(visitors));
   }
 }

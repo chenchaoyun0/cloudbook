@@ -36,23 +36,8 @@ var nameArr = null;
 $(function() {
  	var sortId = "";
  	if (nameArr == null) {
-		$.post("/ajaxProName.html",{},function(data) {
-			nameArr = new Array(data.length);
-			for (var i = 0; i < data.length; i++) {
-				nameArr[i] = data[i]+"";
-			}
-			auto(nameArr);
-		});
 	}
 	$("#p_f_v").focus(function() {
-		if (nameArr == null) {
-			$.post("/ajaxProName.html",{},function(data) {
-				nameArr = new Array(data.length);
-				for (var i = 0; i < data.length; i++) {
-					nameArr[i] = data[i]+"";
-				}
-				auto(nameArr);
-			});
 		}
 		auto(nameArr);
 	});
@@ -104,7 +89,7 @@ function auto(nameArr) {
 		<!-- 头部上半部分 start 包括 logo、搜索、用户中心和购物车结算 -->
 		<div class="logo w1210">
 			<h1 class="fl">
-				<a href="<c:url value='/book/selectBookPages'/>"><img src="<c:url value='img/myheader.jpeg'/>" style="width: 180px;height: 100px;" alt="数通图书"/>
+				<a href="<c:url value='/book/selectBookPages'/>"><img src="<c:url value='img/myheader.png'/>" style="width: 180px;height: 100px;" alt="数通图书"/>
 				</a>
 			</h1>
 			<!-- 头部搜索 start -->

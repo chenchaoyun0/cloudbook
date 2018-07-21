@@ -224,59 +224,30 @@ public class BookController {
     return  resp;
   }
 
-  @RequestMapping(value = "updateBookInput/{bookId}", method = {RequestMethod.GET})
-  public String updateBook(@PathVariable("bookId") String bookId, Model model) {
+  @RequestMapping(value = "selectByPrimaryKey/{bookId}", method = {RequestMethod.GET})
+  public Book selectByPrimaryKey(@PathVariable("bookId") String bookId) {
     Book book = bookService.selectByPrimaryKey(bookId);
-    model.addAttribute("book", book);
-    //
-    TImg tImg = new TImg();
-    tImg.setLinkId(bookId);
-    log.info("查询图书图片begin...");
+    return book;
+  }
+  @RequestMapping(value = "selectList", method = {RequestMethod.POST})
+  public List<TImg> selectList(@RequestBody TImg tImg) {
     List<TImg> imgList = imgService.selectList(tImg);
-    log.info("查询图书图片end...imgList:{}", JSONObject.toJSON(imgList));
-    List<String> imageBase64StrList = BookFileUtils.getImageBase64StrList(imgList);
-    model.addAttribute("imgList", imageBase64StrList);
-    return "book/updateBook";
+    return imgList;
   }
 
-  @RequestMapping(value = "updateBookSubmit", method = {RequestMethod.POST})
-  public String updateBookSubmit(@ModelAttribute("book") Book book, Model model, HttpServletRequest request) {
-    // ...方便测试暂时不做校验
-    String sessionCode = (String)request.getSession().getAttribute("session_vcode");
-    String paramCode = request.getParameter("verifyCode");
-    if (!paramCode.equalsIgnoreCase(sessionCode)) {// 验证码
-      model.addAttribute("book", book);
-      request.setAttribute("error_code", "验证码错误");
-      return "book/updateBook";
-    }
+  @RequestMapping(value = "updateByPrimaryKeySelective", method = {RequestMethod.POST})
+  public void updateByPrimaryKeySelective(@RequestBody Book book) {
     bookService.updateByPrimaryKeySelective(book);
-    model.addAttribute("book", book);
-    model.addAttribute("successMsg", "更新成功");
-    return "book/updateBook";
   }
 
-  @RequestMapping("/admin")
-  public String admin() {
-    return "/admin/bookadmin";
-  }
-
-  @RequestMapping("/adminData")
-  @ResponseBody
-  public PagedResult<Book> adminData(Book book, Integer pageNo, Integer pageSize) {
-    User user = new User();
-    book.setUser(user);
-    PagedResult<Book> list = bookService.selectBookPages(book, pageNo, pageSize);
-    return list;
-  }
-
-  @RequestMapping("/unmountBook/{bookId}")
+  @RequestMapping(value = "/unmountBook/{bookId}",method = {RequestMethod.POST})
   @ResponseBody
   public int unmountBook(@PathVariable("bookId") String bookId) {
 
     return bookService.unmountBook(bookId);
   }
 
-  @RequestMapping("/mountBook/{bookId}")
+  @RequestMapping(value = "/mountBook/{bookId}",method = {RequestMethod.POST})
   @ResponseBody
   public int mountBook(@PathVariable("bookId") String bookId) {
 

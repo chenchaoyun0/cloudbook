@@ -6,6 +6,17 @@ import lombok.Data;
 @Data
 public class SelectBookPagesReq extends BaseReq {
 
+  
+  public SelectBookPagesReq() {
+    super();
+     // TODO Auto-generated constructor stub
+  }
+  public SelectBookPagesReq(Book book, Integer pageNo, Integer pageSize) {
+    super();
+    this.book = book;
+    this.pageNo = pageNo;
+    this.pageSize = pageSize;
+  }
   /**
    *
    */

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cyc.mapper.UserMapper">
+    <!-- 缓存 -->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache" />
+    <resultMap
+        id="UserBaseResultMap"
+        type="com.cyc.common.po.User">
+        <id
+            column="user_Id"
+            property="userId"
+            jdbcType="VARCHAR" />
+        <result
+            column="login_Name"
+            property="loginName"
+            jdbcType="VARCHAR" />
+        <result
+            column="real_Name"
+            property="realName"
+            jdbcType="VARCHAR" />
+        <result
+            column="user_Sex"
+            property="userSex"
+            jdbcType="INTEGER" />
+        <result
+            column="user_Pwd"
+            property="userPwd"
+            jdbcType="VARCHAR" />
+        <result
+            column="user_Email"
+            property="userEmail"
+            jdbcType="VARCHAR" />
+        <result
+            column="user_Tel"
+            property="userTel"
+            jdbcType="VARCHAR" />
+        <result
+            column="user_BirthDay"
+            property="userBirthday"
+            jdbcType="VARCHAR" />
+        <result
+            column="user_Head"
+            property="userHead"
+            jdbcType="VARCHAR" />
+        <result
+            column="user_Code"
+            property="userCode"
+            jdbcType="VARCHAR" />
+        <result
+            column="user_Status"
+            property="userStatus"
+            jdbcType="INTEGER" />
+        <result
+            column="user_RegistTime"
+            property="userRegisttime"
+            jdbcType="VARCHAR" />
+        <result
+            column="user_Role"
+            property="userRole"
+            jdbcType="INTEGER" />
+        <result
+            column="user_Flag"
+            property="userFlag"
+            jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="UserBase_Column_List">
+        user_Id, login_Name, real_Name, user_Sex, user_Pwd,
+        user_Email, user_Tel,
+        user_BirthDay,
+        user_Head, user_Code, user_Status,
+        user_RegistTime, user_Role,user_Flag
+    </sql>
+    <!-- 根据用户Id查询 其图书信息列表 resultMap -->
+    <resultMap
+        type="com.cyc.common.po.User"
+        id="UserBookResultMap"
+        extends="UserBaseResultMap">
+        <collection
+            property="bookList"
+            ofType="com.cyc.common.po.Book">
+            <id
+                column="book_Id"
+                property="bookId"
+                jdbcType="VARCHAR" />
+            <result
+                column="user_Id"
+                property="userId"
+                jdbcType="VARCHAR" />
+            <result
+                column="book_No"
+                property="bookNo"
+                jdbcType="VARCHAR" />
+            <result
+                column="book_Img"
+                property="bookImg"
+                jdbcType="VARCHAR" />
+            <result
+                column="book_Name"
+                property="bookName"
+                jdbcType="VARCHAR" />
+            <result
+                column="book_Author"
+                property="bookAuthor"
+                jdbcType="VARCHAR" />
+            <result
+                column="book_Price"
+                property="bookPrice"
+                jdbcType="DOUBLE" />
+            <result
+                column="book_Desc"
+                property="bookDesc"
+                jdbcType="VARCHAR" />
+            <result
+                column="book_Count"
+                property="bookCount"
+                jdbcType="INTEGER" />
+            <result
+                column="book_Remain"
+                property="bookRemain"
+                jdbcType="INTEGER" />
+            <result
+                column="book_Upload_Time"
+                property="bookUploadTime"
+                jdbcType="VARCHAR" />
+            <result
+                column="book_Status"
+                property="bookStatus"
+                jdbcType="INTEGER" />
+            <result
+                column="book_Flag"
+                property="bookFlag"
+                jdbcType="INTEGER" />
+        </collection>
+    </resultMap>
+    <select
+        id="findUserBookListByUserId"
+        resultMap="UserBookResultMap"
+        parameterType="java.lang.String">
+        select u.*,b.* from t_user u,t_book b where
+        u.user_Id=b.user_Id and
+        u.user_Id=#{userId,jdbcType=VARCHAR}
+    </select>
+    <!-- 邮箱重复 -->
+    <select
+        useCache="false"
+        id="existUserEmail"
+        resultType="java.lang.Integer"
+        parameterType="java.lang.String">
+        select count(user_Id) from t_user where
+        user_Email=#{userEmail,jdbcType=VARCHAR}
+    </select>
+    <!-- 用户名重复 -->
+    <select
+        useCache="false"
+        id="existUserName"
+        resultType="java.lang.Integer"
+        parameterType="java.lang.String">
+        select count(user_Id) from t_user where
+        login_Name=#{loginName,jdbcType=VARCHAR}
+    </select>
+    <!-- 通过激活码查找用户 -->
+    <select
+        useCache="false"
+        id="findByCode"
+        resultMap="UserBaseResultMap"
+        parameterType="java.lang.String">
+        select
+        <include refid="UserBase_Column_List" />
+        from t_user
+        where user_Code= #{userCode,jdbcType=VARCHAR}
+    </select>
+    <!-- 用户根据id激活 -->
+    <update id="activeUserStatus">
+        update t_user set user_Status=#{userStatus,jdbcType=INTEGER} where
+        user_Code=#{userCode,jdbcType=VARCHAR}
+    </update>
+    <!-- 用户登录 -->
+    <sql id="userLoginWhere">
+        <if test="loginMes!=null and loginMes!=''">
+            login_Name=#{loginMes,jdbcType=VARCHAR}
+            or user_Email=#{loginMes,jdbcType=VARCHAR}
+            or user_Tel=#{loginMes,jdbcType=VARCHAR}
+        </if>
+    </sql>
+    <select
+        useCache="false"
+        id="userLoginSubmit"
+        resultMap="UserBaseResultMap"
+        parameterType="java.lang.String">
+        select
+        <include refid="UserBase_Column_List" />
+        from t_user
+        <where>
+            <include refid="userLoginWhere"></include>
+        </where>
+    </select>
+
+    <select
+        id="selectUserPages"
+        resultMap="UserBaseResultMap"
+        parameterType="com.cyc.common.po.User">
+        select * from t_user a where a.user_Flag=1 order by a.user_RegistTime DESC
+    </select>
+
+    <update
+        id="updatePermission"
+        parameterType="java.lang.String">
+        update t_user a set a.user_Role=1 where a.user_Id=#{userId}
+    </update>
+</mapper>
