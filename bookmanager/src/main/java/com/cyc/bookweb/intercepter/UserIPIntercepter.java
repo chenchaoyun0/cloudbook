@@ -161,6 +161,7 @@ public class UserIPIntercepter implements HandlerInterceptor {
           BlackListThreadLoacal.setFlagBlackIp(true);
           return true;
         } else {
+          BlackListThreadLoacal.setFlagBlackIp(false);
           return true;
         }
       }
