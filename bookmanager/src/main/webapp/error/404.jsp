@@ -22,7 +22,7 @@
             <div class="message_tips">
                 <h2>哎呀！ 找不到页面了</h2>
                 <h5>不要伤心，可能是网址错了呢，重新核对一下吧。</h5>
-                <a class="btn_tips" href="${pageContext.request.contextPath}/book/selectBookPages">返回数通天下图书城</a>
+                <a class="btn_tips" href="${pageContext.request.contextPath}">返回数通天下图书城</a>
             </div>
         </div>
 
