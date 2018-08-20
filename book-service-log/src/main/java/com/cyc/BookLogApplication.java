@@ -18,10 +18,14 @@ import org.springframework.context.event.ContextRefreshedEvent;
 
 import com.cyc.common.utils.spring.SpringUtils;
 
+import io.prometheus.client.spring.boot.EnablePrometheusEndpoint;
+import io.prometheus.client.spring.boot.EnableSpringBootMetricsCollector;
 import tk.mybatis.spring.annotation.MapperScan;
 
 @SpringBootApplication
 @EnableEurekaClient
+@EnablePrometheusEndpoint
+@EnableSpringBootMetricsCollector
 @MapperScan("com.cyc.mapper")
 public class BookLogApplication extends SpringBootServletInitializer
   implements EmbeddedServletContainerCustomizer, ApplicationListener<ContextRefreshedEvent> {

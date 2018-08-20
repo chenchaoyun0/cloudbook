@@ -20,8 +20,8 @@ import io.prometheus.client.spring.boot.EnableSpringBootMetricsCollector;
 @EnableFeignClients
 @EnableHystrixDashboard
 @EnablePrometheusEndpoint
-@ServletComponentScan
 @EnableSpringBootMetricsCollector
+@ServletComponentScan
 public class BookWebApplication extends SpringBootServletInitializer implements EmbeddedServletContainerCustomizer {
 
   private static final Logger log = LoggerFactory.getLogger(BookWebApplication.class);

@@ -54,6 +54,7 @@
         <mybatis.spring.version>1.2.4</mybatis.spring.version>
         <mapper.starter.version>2.0.3-beta1</mapper.starter.version>
         <pagehelper.starter.version>1.2.5</pagehelper.starter.version>
+        <prometheus.version>0.1.0</prometheus.version>
     </properties>
 
     <dependencies>
@@ -251,6 +252,23 @@
             <groupId>eu.bitwalker</groupId>
             <artifactId>UserAgentUtils</artifactId>
             <version>1.20</version>
+        </dependency>
+        <dependency>
+            <groupId>io.prometheus</groupId>
+            <artifactId>simpleclient_spring_boot</artifactId>
+            <version>${prometheus.version}</version>
+        </dependency>
+        <!-- Hotspot JVM metrics -->
+        <dependency>
+            <groupId>io.prometheus</groupId>
+            <artifactId>simpleclient_hotspot</artifactId>
+            <version>${prometheus.version}</version>
+        </dependency>
+        <!-- Exposition servlet -->
+        <dependency>
+            <groupId>io.prometheus</groupId>
+            <artifactId>simpleclient_servlet</artifactId>
+            <version>${prometheus.version}</version>
         </dependency>
     </dependencies>
 
