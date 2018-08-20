@@ -12,11 +12,16 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 
+import io.prometheus.client.spring.boot.EnablePrometheusEndpoint;
+import io.prometheus.client.spring.boot.EnableSpringBootMetricsCollector;
+
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableHystrixDashboard
+@EnablePrometheusEndpoint
 @ServletComponentScan
+@EnableSpringBootMetricsCollector
 public class BookWebApplication extends SpringBootServletInitializer implements EmbeddedServletContainerCustomizer {
 
   private static final Logger log = LoggerFactory.getLogger(BookWebApplication.class);
