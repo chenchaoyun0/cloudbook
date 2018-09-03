@@ -9,8 +9,12 @@ import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomi
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 
 import io.prometheus.client.spring.boot.EnablePrometheusEndpoint;
 import io.prometheus.client.spring.boot.EnableSpringBootMetricsCollector;
@@ -18,6 +22,7 @@ import io.prometheus.client.spring.boot.EnableSpringBootMetricsCollector;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
+@EnableHystrix
 @EnableHystrixDashboard
 @EnablePrometheusEndpoint
 @EnableSpringBootMetricsCollector
@@ -46,5 +51,11 @@ public class BookWebApplication extends SpringBootServletInitializer implements 
     if (port != null) {
       container.setPort(Integer.valueOf(port));
     }
+  }
+  
+  @Bean
+  @LoadBalanced
+  RestTemplate restTemplate() {
+      return new RestTemplate();
   }
 }

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cyc.bookweb.hystric.SchedualServiceHiHystric;
 import com.cyc.common.po.BlackLisEntity;
 import com.cyc.common.po.TLog;
 import com.cyc.common.vo.IndexHomeForIpResp;
@@ -13,7 +14,7 @@ import com.cyc.common.vo.IndexHomeResp;
 import com.cyc.common.vo.SelectBlackListResp;
 import com.cyc.common.vo.VisitorsResp;
 
-@FeignClient(value = "book-log")
+@FeignClient(value = "book-log",fallback = SchedualServiceHiHystric.class)
 public interface IBookLogClient {
   @RequestMapping(value = "/indexHome", method = RequestMethod.GET)
   public IndexHomeResp indexHome(@RequestParam(value = "pageNo") Integer pageNo,
