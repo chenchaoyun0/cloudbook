@@ -1,7 +1,7 @@
 package com.cyc.common.po;
 
 import java.io.Serializable;
-
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -10,7 +10,7 @@ import lombok.Data;
 @Table(name = "t_log")
 public class TLog implements Serializable {
   private static final long serialVersionUID = 1L;
-
+  @Id
   private Long id;
 
   private String userIp;

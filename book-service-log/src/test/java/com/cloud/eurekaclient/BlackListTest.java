@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.alibaba.fastjson.JSONObject;
 import com.cyc.BookLogApplication;
 import com.cyc.common.po.BlackLisEntity;
+import com.cyc.common.po.TLog;
 import com.cyc.common.utils.time.DateConvertUtils;
 import com.cyc.common.vo.VisitorsResp;
 import com.cyc.mapper.BlackListMapper;
@@ -59,6 +60,17 @@ public class BlackListTest {
     int insert = logService.saveBlackLisEntity(blackLisEntity);
     log.info("insert:{}",  insert);
   }
+  
+  @Test
+  public void updateLog(){
+      TLog tLog = logService.selectByUserIp("127.0.0.1");
+      log.info("tLog:{}",  JSONObject.toJSONString(tLog));
+      tLog.setAction("xxxx");
+      //
+      int i = logService.updateByPrimaryKey(tLog);
+      log.info("i:{}",  i);
+  }
+  
   @Test
   public void test(){
     VisitorsResp visitors = logService.visitors();

@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 描述: 隐藏密码等属性
+ * 描述: 隐藏集合collection、map 元素
  *
  * @author chenchaoyun
  * @create 2018/11/27
@@ -15,6 +15,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.FIELD })
 @Documented
-public @interface HideAnn {
+public @interface HideCollection {
 
 }

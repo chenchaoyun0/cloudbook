@@ -7,8 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 不打印照片
- * @Description 在实体类中使用
+ * @Description 隐藏base64，或者过长字符串属性
  * @author chenchaoyun
  * @date 2017年8月8日 下午3:47:14
  */
