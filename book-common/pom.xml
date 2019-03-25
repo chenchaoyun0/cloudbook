@@ -270,6 +270,11 @@
             <artifactId>simpleclient_servlet</artifactId>
             <version>${prometheus.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.megvii.dzh</groupId>
+            <artifactId>dzh-utils</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <distributionManagement>

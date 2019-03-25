@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.fastjson.JSONObject;
-import com.cyc.common.utils.LogUtil;
 
 import lombok.extern.slf4j.Slf4j;
 

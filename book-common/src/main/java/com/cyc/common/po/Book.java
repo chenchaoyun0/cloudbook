@@ -3,8 +3,6 @@ package com.cyc.common.po;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
-import com.cyc.common.utils.images.HideImg;
-
 import lombok.Data;
 
 @Data
@@ -21,7 +19,6 @@ public class Book implements Serializable {
   private String bookHouse;
 
   private String bookNo;
-  @HideImg
   private String bookImg;
 
   private BufferedImage bookImage;
